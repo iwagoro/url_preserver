@@ -1,9 +1,15 @@
 import Image from 'next/image'
+import React from 'react'
+import { RGrid, RMain, RSidebar, RWall } from './components/ResizableGrid'
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      aiueo
-    </main>
+    <div style={{width:'100vw',height:'100vh'}}>
+        <RGrid sidebarMinSize={2} sidebarMaxSize={4} color='gray'>
+            <RSidebar color='blue' sx={{height:'100%'}}/>
+            <RWall color='red'/>
+            <RMain color='green'/>
+        </RGrid>
+    </div>
   )
 }
