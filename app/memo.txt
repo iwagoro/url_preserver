@@ -1,0 +1,140 @@
+App
+├ Components
+│ └ Base 
+│ 　 ├ RsizableGrid.tsx
+│ 　 ├ SideBar.tsx
+│ 　 └ Footer.tsx
+├ Consts
+│ ├ Provider
+│ │ ├ UserDataProvider.tsx
+│ │ ├ SelectedLisProvidert.tsx
+│ │ └ SelectedElementProvider.tsx
+│ └ 	
+├ Pages
+│ ├ Home.tsx
+│ ├ Search.tsx
+│ ├ Library.tsx
+│ └ Setting.tsx
+├ UI
+│ └ ListButton.tsx
+├ Features
+│ ├ DatabaseCRUD.tsx
+│ ├ UserDataUtil.tsx
+│ ├ UrlCRUD.tsx
+│ └ TagCRUD.tsx
+├ Lib
+│ ├ FireBase.tsx
+│ └ LinkPreview.tsx
+└ 	
+
+import React from "react";
+import { useState, useEffect, useContext, createContext } from "react";
+import { db } from "./Components/Firebase";
+import { collection, onSnapshot, doc, getDoc } from "@firebase/firestore";
+import { RGrid, RSidebar, RWall, RMain } from "./Components/ResizableGrid";
+import ListButton from "./Components/ListButton";
+import TagButton from "./Components/TagButton";
+import Search from "./Components/Search";
+import Main from "./Main";
+import { Chip, ListItem } from "@mui/material";
+
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import TagView from "./TagView";
+
+export const SearchContext = createContext({});
+
+const Home = () => {
+    interface Tags {
+        [key: string]: boolean;
+    }
+
+    const [tags, setTags] = useState<Tags>({});
+    const [originTags, setOriginTags] = useState<Tags>({});
+    const [presets, setPresets] = useState<Tags>({});
+    const [originPresets, setOriginPresets] = useState<Tags>({});
+    const [type, setType] = useState(true);
+    const [selectMain  , setSelectMain] = useState(true);
+    const value = {
+        tags,
+        setTags,
+        originTags,
+        setOriginTags,
+        presets,
+        setPresets,
+        originPresets,
+        setOriginPresets,
+        type,
+        setType,
+    };
+
+    useEffect(() => {
+        const unscribe = onSnapshot(collection(db, "User", "test@gmail.com", "Tags"), (snapshot) => {
+            snapshot.forEach((doc) => {
+                if (doc.data().type === "tag") {
+                    setTags((prev) => ({ ...prev, [doc.data().name]: false }));
+                    setOriginTags((prev) => ({ ...prev, [doc.data().name]: false }));
+                } else {
+                    setPresets((prev) => ({ ...prev, [doc.data().name]: false }));
+                    setOriginPresets((prev) => ({ ...prev, [doc.data().name]: false }));
+                }
+            });
+        });
+    }, []);
+
+    const selectTag = (e: any) => {
+        const tag = e;
+        for (const key in tags) {
+            setTags((prev) => ({ ...prev, [key]: false }));
+        }
+        setTags((prev) => ({ ...prev, [tag]: true }));
+        setSelectMain(false);
+        
+    };
+
+    return (
+        <div style={{ height: "100%" }}>
+            <RGrid sidebarMaxSize={4} sidebarMinSize={2} color="black">
+                <RSidebar color="#121212" sx={{height:'95px'}}>
+                    <ListButton label="Home" color="white" onClick={()=>setSelectMain(true)}>
+                        <HomeOutlinedIcon />
+                    </ListButton>
+
+                    <ListButton label="Search" color="white" onClick={(e)=>console.log(e)}>
+                        <SearchOutlinedIcon />
+                    </ListButton>
+                </RSidebar>
+                <RSidebar color="#121212" sx={{ height: 'calc(100vh - 125px)' ,overflow:"scroll"}}>
+                    
+                        <SearchContext.Provider value={value}>
+                            <Search />
+                        </SearchContext.Provider>
+                    
+                        {type === true && Object.keys(tags).map((tag, index) => <TagButton type="tag" label={tag} color={tags[tag] ? "rgba(255, 55, 216, 1)" : "white"} onClick={(e) => selectTag(e)} />)}
+
+                        {type === false && Object.keys(presets).map((tag, index) => <TagButton type="preset" label={tag} color={presets[tag] ? "rgba(255, 55, 216, 1)" : "white"} onClick={(e) => selectTag(e)} />)}
+                    
+                    
+                </RSidebar>
+
+                <RWall color="black" width={10} />
+
+                <RMain color="linear-gradient(180deg, #343434, #121212 40%)">
+                    {
+                        selectMain === true && <Main />
+                    }
+                    {
+                        selectMain === false && <TagView/>
+                    }
+                </RMain>
+            </RGrid>
+        </div>
+    );
+};
+
+export default Home;
+
+	
+	

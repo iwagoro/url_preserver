@@ -1,20 +1,16 @@
 "use client"
 import styled from "@emotion/styled";
-import {CSSProperties} from "react";
-
-import { List, Card } from '@mui/material'
-import React,{useEffect, useState,useRef,ReactNode} from "react";
+import {Card} from '@mui/material'
+import React,{useEffect, useState,useRef,ReactElement,} from "react";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const ResizableMainContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
-    overflow: scroll;
-    width: calc(100%-10px);
-    height: calc(100% - 20px);
+const ResizableSidebarContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
+    width: calc(100% - 10px); 
     background-color: ${(props) => props.color ? props.color : 'black'};
-    margin: 10px 10px 10px 0px;
+    margin: 10px 0 10px 10px;
     ${(props) => props.customStyle};
-`
+`;
 
 const ResizableWallContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
     height: 100%;
@@ -23,43 +19,48 @@ const ResizableWallContainer = styled(Card) <{ color?: string, customStyle?: { [
     ${(props) => props.customStyle};
 `;
 
-const ResizableSidebarContainer = styled(Card) <{ color?: string, customStyle?:{[key:string]:string} }>`
-    width: calc(100% - 10px); 
-    background-color: ${(props) => props.color ? props.color : 'black'};
-    margin: 10px 0 10px 10px;
+const ResizableMainContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
+    overflow: scroll;
+    width: calc(100%-10px);
+    height: calc(100% - 20px);
+    background-image: ${(props) => props.color ? props.color : 'linear-gradient(90deg, #000000, #000000)'};
+    margin: 10px 10px 10px 0px;
     ${(props) => props.customStyle};
 `;
 
 
-const RMain = ({ children, color, sx }: {children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
-    return (
-        <ResizableMainContainer color={color} style={sx}>
-            {children}
-        </ResizableMainContainer>
-    )
-};
-
 const RSidebar = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string }}) => {
     return(
-        <ResizableSidebarContainer color={color} style={sx}>
+        <ResizableSidebarContainer color={color} customStyle={sx}>
             {children}
         </ResizableSidebarContainer>
     )
 };
 
 const RWall = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
-    return <ResizableWallContainer color={color} style={sx}>
-        {children}
-    </ResizableWallContainer>
+    return (
+        <ResizableWallContainer color={color} customStyle={sx}>
+            {children}
+        </ResizableWallContainer>
+    )
+};
+
+const RMain = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
+    return (
+        <ResizableMainContainer color={color} customStyle={sx}>
+            {children}
+        </ResizableMainContainer>
+    )
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color }: { children?: [ReactNode,ReactNode,ReactNode], sidebarMinSize: number, sidebarMaxSize: number, color?: string }) => {
+const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?: Array<ReactElement>, sidebarMinSize: number, sidebarMaxSize: number, color?: string }) => {
 
     const parentWidth = useRef<HTMLDivElement>(null!);
     const [ResizableWidth, setResizableWidth] = useState(0);
-
+    
+    
     useEffect(() => {
         const resizeObserver = new ResizeObserver(entries => {
             setResizableWidth((parentWidth.current.clientWidth / 10) * sidebarMinSize);
@@ -102,11 +103,13 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color }: { children?
                     overflow: "scroll",
                 }}
             >
-                {children && children[0] !== undefined ? children[0] : <div></div>}
+                {children && children.slice(0, children.length - 2).map((child, index) => (
+                    child
+                ))}
             </div>
             <div id="wall" style={{ cursor: "ew-resize" }} onMouseDown={handleMouseDown}>
-                {children && children[1] !== undefined ? children[1] : <div></div>}
-            </div>
+                {children && children[children.length - 2]}
+             </div>
             <div
                 id="main"
                 style={{
@@ -115,7 +118,9 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color }: { children?
                     minWidth: `calc(100% - ${ResizableWidth}px)`,
                 }}
             >
-                {children && children[2] !== undefined ? children[2] : <div></div>}
+                
+                {children && children[children.length-1]}
+                
             </div>
         </div>
 
