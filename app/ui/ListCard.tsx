@@ -41,7 +41,7 @@ const ListCard = ({type}:{type:string}) => {
     useEffect(()=>{
         setCard([])
         makeCard()
-    },[])
+    },[originTags,originPresets])
 
     return(
         <div className="w-full  flex flex-wrap justify-between">

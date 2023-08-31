@@ -5,12 +5,6 @@ import { ListItem, List } from '@mui/material'
 
 import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
 
-import { Inter } from '@next/font/google'
-const InterNormal = Inter({
-    weight: '400',
-    subsets: ['latin-ext'],
-})
-
 
 const ListButtonContainer = styled(ListItem) <{ color?: string, focus?: Boolean }>`
     margin:5px;
@@ -40,7 +34,7 @@ const TagButton = ({ children, color, onClick, label, focus, sx, type = 'tag' }:
             <ListItem className="cursor-pointer w-full flex items-center flex-row p-0 hover:bg-[#191919]" onClick={() => onClick && onClick(label)} >
 
                 <ArrowRightOutlinedIcon sx={{ color: 'gray' }} />
-                <List className={InterNormal.className} sx={{ paddingLeft: '0.5rem', textAlign: 'start' }}>
+                <List  sx={{ paddingLeft: '0.5rem', textAlign: 'start' }}>
                     <div style={{ fontSize: '1rem', color: color }} >
                         {label}
                     </div>

@@ -12,14 +12,16 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
+import { or } from "firebase/firestore";
 
 const Library = () => {
 
-    const {selectedType,setSelectedType} = useContext(SelectedData)
+    const {selectedType,setSelectedType,setSelectedPresets,setSelectedTags} = useContext(SelectedData)
     const {originTags,originPresets} = useContext(UserData)
 
     const [toggle, setToggle] = React.useState<boolean>(false);
     const [lists, setLists] = React.useState<Record<string, boolean>>({});
+    const [listCard, setListCard] = React.useState<JSX.Element[]>([]);
 
     useEffect(()=>{
         if(selectedType){
@@ -27,7 +29,33 @@ const Library = () => {
         }else{
             setLists(originPresets)
         }
-    },[selectedType])
+    }, [originPresets, originTags, selectedType])
+
+    useEffect(()=>{
+        setListCard([])
+        Object.keys(lists).map((list) => {
+                
+                setListCard(prev => [...prev, (
+                    <TagButton
+                        key={"TagButton"+list}
+                        type={selectedType ? 'tag' : 'preset'}
+                        label={list}
+                        color={lists[list] ? "purple" : "white"}
+                        onClick={() => {
+                            setLists(selectedType ? originTags : originPresets)
+                            setLists(prev => ({ ...prev, [list]: true }))
+                            if (selectedType) {
+                                setSelectedTags(list)
+                            } else {
+                                setSelectedPresets(list)
+                            }
+
+                        }}
+                    />
+                )])
+            
+        })
+    },[lists])
 
     return (
         <div id="Library" >
@@ -79,20 +107,7 @@ const Library = () => {
             <ListItem id="Lists" className="w-full flex justify-between">
                 <List >
                     {
-                        Object.keys(lists).map((list) => {
-                            return (
-                                <TagButton
-                                    key = {list}
-                                    type={selectedType ? 'tag' : 'preset'}
-                                    label={list}
-                                    color={lists[list] ? "purple" : "white"}
-                                    onClick={() => {
-                                        setLists(originTags)
-                                        setLists(prev => ({ ...prev, [list]: true }))
-                                    }}
-                                />
-                            )
-                        })
+                        listCard
                     }
                 </List>
             </ListItem>
