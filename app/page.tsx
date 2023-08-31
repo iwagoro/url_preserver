@@ -1,33 +1,30 @@
 "use client"
-
-"use client"
 import React from 'react'
-import Main from './components2/base/Main'
-import Sidebar from './components2/base/Sidebar'
-import {RGrid,RSidebar,RWall,RMain} from './components2/base/ResizableGrid'
+import ForDesktop from './components2/base/ForDesktop'
+import UserDataProvider from "@/consts/provider/UserDataProvider";
+import SelectedDataProvider from './consts/provider/SelectedData';
+import { Inter } from '@next/font/google'
+const InterNormal = Inter({
+    weight: '400',
+    subsets: ['latin-ext'],
+})
 
 const App = () => {
     return (
-        <>
+        <UserDataProvider>
+        <SelectedDataProvider>
+        <div className={InterNormal.className}>
             <div id="ForDeskTop" className="w-screen h-screen bg-black">
-                <RGrid sidebarMaxSize={5} sidebarMinSize={2}>
-                    <RSidebar color='#121212'>
-                        <Sidebar/>
-                    </RSidebar>
-                    <RWall color='#000000'></RWall>
-                    <RMain color='linear-gradient(180deg,#232323,#121212)'>
-                        <Main>
-                            
-                        </Main>
-                    </RMain>
-                </RGrid>
+                <ForDesktop/>
             </div>
 
             <div id="ForMobile">
                 
             </div>
 
-        </>
+        </div>
+        </SelectedDataProvider>
+        </UserDataProvider>
     )
 }
 

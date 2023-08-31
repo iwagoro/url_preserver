@@ -8,13 +8,7 @@ import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
 
-import { SearchContext } from "../page";
 
-import { Inter } from '@next/font/google'
-const InterNormal = Inter({
-    weight: '400',
-    subsets: ['latin-ext'],
-})
 
 export default function Search() {
 
