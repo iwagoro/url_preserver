@@ -9,6 +9,7 @@ const ListCard = ({type}:{type:string}) => {
     const makeCard = () => {
         if(type === 'tag'){
             Object.keys(originTags).slice(0, 6).map(item => {
+                console.log(item)
                 const newCard = (
                     <>
                         <div onClick={() => { console.log(item) }} className="w-[48%] h-[70px]  my-[10px] rounded-[10px] bg-[#202020] hover:bg-[#242424] flex no-underline">
