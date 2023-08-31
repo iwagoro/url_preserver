@@ -35,7 +35,6 @@ const SelectedList = () => {
         setTable([])
         setUrlAmount(0)
         Object.keys(urls).map( (url,index) =>{
-            
             if(urls[url].tags.includes(label) ){
                 setUrlAmount(prev => prev+1)
                 const newTable = (
@@ -45,7 +44,7 @@ const SelectedList = () => {
                             <img src={urls[url].image} width="40px" height="40px" style={{ maxWidth: "40px", maxHeight: "40px", minWidth: "40px", minHeight: "40px", objectFit: 'cover', borderRadius: '10px' }} />
                         </TableCell>
                         <TableCell className="text-white">{urls[url].title}</TableCell>
-                        <TableCell className="text-white">{urls[url].date.toDate().toLocaleString()}</TableCell>
+                        <TableCell className="text-white">{urls[url].date}</TableCell>
                     </TableRow>
                 )
                 setTable(prev => [...prev, newTable])

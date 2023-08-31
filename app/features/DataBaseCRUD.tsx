@@ -10,7 +10,7 @@ interface sendingData {
     image: string,
     tags: string[],
     presets: string[],
-    date: Date
+    date: string
 }
 
 const addUrltoDB = async (object:sendingData) => {
@@ -27,7 +27,7 @@ const addUrltoDB = async (object:sendingData) => {
         }
     }
 
-    const sendingObject = {...object,date:new Date()}
+    const sendingObject = { ...object, date: (new Date()).toLocaleDateString()}
 
     const ref = doc(db, "User", 'test@gmail.com', 'Urls', extractDomain(object.url))
     await setDoc(ref,sendingObject)
