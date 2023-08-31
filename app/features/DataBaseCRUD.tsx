@@ -34,5 +34,19 @@ const addUrltoDB = async (object:sendingData) => {
 
 }
 
+const AddTagtoDB = async (tag:string) => {
+    const ref = doc(db, "User", 'test@gmail.com', 'Tags', tag)
+    await setDoc(ref, {
+        name: tag,
+        type: "tag"
+    })
+}   
 
-export {addUrltoDB}
+const AddPresettoDB = async (preset:string) => {
+    const ref = doc(db, "User", 'test@gmail.com', 'Tags', preset)
+    await setDoc(ref, {
+        name: preset,
+        type: "preset"
+    })
+}
+export {addUrltoDB,AddTagtoDB,AddPresettoDB}

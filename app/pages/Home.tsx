@@ -5,6 +5,7 @@ import Greet from '@/features/Greet'
 import UrlCard from "@/ui/UrlCard";
 import ListCard from "@/ui/ListCard";
 import AddUrl from "@/ui/AddUrl";
+import AddTag from "@/ui/AddTag";
 
 const Home = () => {
     return (
@@ -36,6 +37,11 @@ const Home = () => {
                 <div id="AddURL" className="w-full my-[5%]">
                     <AddUrl />
                 </div>
+
+                <div id="AddTag" className="w-full my-[5%]">
+                    <AddTag />
+                </div>
+
                 
                 <div className="h-[10%]"></div>
 

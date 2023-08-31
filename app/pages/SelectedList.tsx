@@ -34,8 +34,8 @@ const SelectedList = () => {
     useEffect(()=>{
         setTable([])
         setUrlAmount(0)
-        Object.keys(urls).map( (url,index) =>{
-            if(urls[url].tags.includes(label) ){
+        Object.keys(urls).filter(url => urls[url].tags.includes(label)).map( (url,index) =>{
+
                 setUrlAmount(prev => prev+1)
                 const newTable = (
                     <TableRow key={"Table" + url} className="cursor-pointer hover:bg-[#242424]" onClick={() => { ClicktoURL(urls[url].url) }}>
@@ -48,7 +48,7 @@ const SelectedList = () => {
                     </TableRow>
                 )
                 setTable(prev => [...prev, newTable])
-            }
+            
 
         } )
     },[urls,label])

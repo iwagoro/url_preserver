@@ -40,6 +40,14 @@ const createThumbnail = async (url: string) => {
         result = { ...result, image:result2.image }
     }
 
+    if (result.image === undefined || result.image === null || result.image === "") {
+        const result3 = await fetch('https://source.unsplash.com/random/')
+        .then(data => data.url)
+        result = { ...result, image: result3 }
+    }
+
+
+
     
 
     return result 
