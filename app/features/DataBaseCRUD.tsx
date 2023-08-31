@@ -1,7 +1,8 @@
 'use client'
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import {db} from '../lib/FireBase';
-import { collection, onSnapshot, doc, getDoc,setDoc } from "@firebase/firestore";
+import { collection, onSnapshot, doc, getDoc,setDoc,deleteDoc,updateDoc } from "@firebase/firestore";
+
 
 interface sendingData {
     url: string,
@@ -35,10 +36,13 @@ const addUrltoDB = async (object:sendingData) => {
 }
 
 const AddTagtoDB = async (tag:string) => {
+    const image = await fetch('https://source.unsplash.com/random/')
+        .then(data => data.url)
     const ref = doc(db, "User", 'test@gmail.com', 'Tags', tag)
     await setDoc(ref, {
         name: tag,
-        type: "tag"
+        type: "tag",
+        image: image
     })
 }   
 
@@ -49,4 +53,18 @@ const AddPresettoDB = async (preset:string) => {
         type: "preset"
     })
 }
-export {addUrltoDB,AddTagtoDB,AddPresettoDB}
+
+const deleteTag = async (tag: string, urls: Record<string, Record<string, any>>) => {
+    
+    Object.keys(urls).filter( url => urls[url].tags.includes(tag)).map( async url => {
+
+        const ref = doc(db, "User", 'test@gmail.com','Urls',url)
+        await updateDoc(ref,{
+            tags: urls[url].tags.filter((item: string) => item !== tag)
+        })
+    })
+
+    const ref = doc(db, "User", 'test@gmail.com', 'Tags', tag)
+    await deleteDoc(ref)
+}
+export {addUrltoDB,AddTagtoDB,AddPresettoDB,deleteTag}

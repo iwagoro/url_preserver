@@ -17,17 +17,20 @@ import { or } from "firebase/firestore";
 const Library = () => {
 
     const {selectedType,setSelectedType,setSelectedPresets,setSelectedTags} = useContext(SelectedData)
-    const {originTags,originPresets} = useContext(UserData)
+    const {tags,originTags,presets,originPresets} = useContext(UserData)
 
     const [toggle, setToggle] = React.useState<boolean>(false);
     const [lists, setLists] = React.useState<Record<string, boolean>>({});
     const [listCard, setListCard] = React.useState<JSX.Element[]>([]);
+    const [listImage, setListImage] = React.useState<Record<string,string>>({});
 
     useEffect(()=>{
         if(selectedType){
             setLists(originTags)
+            setListImage(tags)
         }else{
             setLists(originPresets)
+            setListImage(presets)
         }
     }, [originPresets, originTags, selectedType])
 
@@ -40,6 +43,7 @@ const Library = () => {
                         key={"TagButton"+list}
                         type={selectedType ? 'tag' : 'preset'}
                         label={list}
+                        image={listImage[list]}
                         color={lists[list] ? "purple" : "white"}
                         onClick={() => {
                             setLists(selectedType ? originTags : originPresets)
@@ -105,7 +109,7 @@ const Library = () => {
             </ListItem>
 
             <ListItem id="Lists" className="w-full flex justify-between">
-                <List >
+                <List className="w-full">
                     {
                         listCard
                     }
