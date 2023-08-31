@@ -29,9 +29,9 @@ const AddUrl = () => {
     }
 
     const submitURL = async () => {
-        const urlValue = extractDomain(getValues("url_value"));
+        const urlValue =getValues("url_value");
         let sendingData = await createThumbnail(urlValue);
-        sendingData = { ...sendingData, tags: selectedTags };
+        sendingData = { ...sendingData, tags: selectedTags,url:urlValue };
         await addUrltoDB(sendingData);
         setValue("url_value", "");
         setSelectedTags([]);
@@ -68,7 +68,20 @@ const AddUrl = () => {
                 {
                     Object.keys(originTags).map(item => {
                         return (
-                            <Chip label={item} variant="outlined" sx={{ color: (selectedTags.includes(item)) ? "purple" : "white" }} className="m-[5px]" onClick={() => {setSelectedTags(prev=>[...prev,item])}} />
+                            <Chip 
+                                key={"Chip"+item} 
+                                label={item} 
+                                variant="outlined" 
+                                sx={{ color: (selectedTags.includes(item)) ? "magenta" : "white" }} 
+                                className="m-[5px]" 
+                                onClick={() => {
+                                    if (selectedTags.includes(item)) {
+                                        setSelectedTags(prev => prev.filter(tag => tag !== item))
+                                    } else {
+                                        setSelectedTags(prev => [...prev, item])
+                                    }
+                                }} 
+                            />
                         )
                     })
                 }

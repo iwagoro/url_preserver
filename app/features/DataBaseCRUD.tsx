@@ -9,6 +9,8 @@ interface sendingData {
     description: string,
     image: string,
     tags: string[],
+    presets: string[],
+    date: Date
 }
 
 const addUrltoDB = async (object:sendingData) => {
@@ -25,8 +27,10 @@ const addUrltoDB = async (object:sendingData) => {
         }
     }
 
+    const sendingObject = {...object,date:new Date()}
+
     const ref = doc(db, "User", 'test@gmail.com', 'Urls', extractDomain(object.url))
-    await setDoc(ref,object)
+    await setDoc(ref,sendingObject)
 
 }
 
