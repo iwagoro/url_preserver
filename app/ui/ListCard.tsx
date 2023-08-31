@@ -9,7 +9,6 @@ const ListCard = ({type}:{type:string}) => {
     const makeCard = () => {
         if(type === 'tag'){
             Object.keys(originTags).slice(0, 6).map(item => {
-                console.log(item)
                 const newCard = (
                     <>
                         <div key={item} onClick={() => { console.log(item) }} className="w-[48%] h-[70px]  my-[10px] rounded-[10px] bg-[#202020] hover:bg-[#242424] flex no-underline">
@@ -42,7 +41,7 @@ const ListCard = ({type}:{type:string}) => {
     useEffect(()=>{
         setCard([])
         makeCard()
-    },[type])
+    },[])
 
     return(
         <div className="w-full  flex flex-wrap justify-between">

@@ -19,7 +19,7 @@ const SelectedDataProvider = ({ children }: { children: React.ReactNode }) => {
     const [selectedTags, setSelectedTags] = useState<Record<string, boolean>>({})
     const [selectedPresets, setSelectedPresets] = useState<Record<string, boolean>>({})
     const [selectedUrls, setSelectedUrls] = useState<Record<string, Record<string, string>>>({})
-    const [selectedType, setSelectedType] = useState<boolean>(false)
+    const [selectedType, setSelectedType] = useState<boolean>(true)
 
 
 
