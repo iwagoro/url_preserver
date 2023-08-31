@@ -16,18 +16,6 @@ const AddUrl = () => {
     const [selectedTags,setSelectedTags] = useState<string[]>([])
     const { register,setValue,getValues } = useForm();
 
-    const extractDomain = (url: string) => {
-        const domainRegex = /^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/.*)?$/;
-        const matches = url.match(domainRegex);
-
-        if (matches) {
-            const [, , domain, topLevelDomain] = matches;
-            return `${domain}.${topLevelDomain}`;
-        } else {
-            return url;
-        }
-    }
-
     const submitURL = async () => {
         const urlValue =getValues("url_value");
         let sendingData = await createThumbnail(urlValue);

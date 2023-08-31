@@ -42,7 +42,7 @@ const SelectedList = () => {
                     <TableRow key={"Table" + url} className="cursor-pointer hover:bg-[#242424]" onClick={() => { ClicktoURL(urls[url].url) }}>
                         <TableCell className="text-white"  >{index}</TableCell>
                         <TableCell className="text-white"  >
-                            <div className="w-[40px] h-[40px] bg-white rounded-[10px]"></div>
+                            <img src={urls[url].image} width="40px" height="40px" style={{ maxWidth: "40px", maxHeight: "40px", minWidth: "40px", minHeight: "40px", objectFit: 'cover', borderRadius: '10px' }} />
                         </TableCell>
                         <TableCell className="text-white">{urls[url].title}</TableCell>
                         <TableCell className="text-white">{urls[url].date.toDate().toLocaleString()}</TableCell>

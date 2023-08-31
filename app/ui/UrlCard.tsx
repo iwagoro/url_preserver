@@ -45,7 +45,7 @@ const UrlCard = ( ) => {
                             : <div style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, backgroundColor: '#454545', margin: '10%', borderRadius:'10px' }} />
                     }
                     <div className="text-white py-[10%] w-[80%] text-left font-[1rem]">
-                        {title !== undefined ? title.slice(0, 20) : <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] " />}
+                        {title !== undefined ? title.slice(0, 30) : <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] " />}
                     </div>
                     <div className="text-[#808080] pb-[10%] w-[80%] text-left font-[0.8rem] " >
                         {url !== undefined ? extractDomain(url) : <div className=" bg-[#454545] h-[1rem] w-[80%] rounded-[20px] " />}
