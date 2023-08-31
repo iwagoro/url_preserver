@@ -12,7 +12,7 @@ const ListCard = ({type}:{type:string}) => {
                 console.log(item)
                 const newCard = (
                     <>
-                        <div onClick={() => { console.log(item) }} className="w-[48%] h-[70px]  my-[10px] rounded-[10px] bg-[#202020] hover:bg-[#242424] flex no-underline">
+                        <div key={item} onClick={() => { console.log(item) }} className="w-[48%] h-[70px]  my-[10px] rounded-[10px] bg-[#202020] hover:bg-[#242424] flex no-underline">
                             <div className="w-[50px] h-[50px] bg-[#454545] rounded-[10px] m-[10px]"></div>
                             <div className="text-white text-left font-[1rem] flex items-center">
                                 {item !== undefined ? item : <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] " />}
@@ -26,7 +26,7 @@ const ListCard = ({type}:{type:string}) => {
             Object.keys(originPresets).slice(0, 6).map(item => {
                 const newCard = (
                     <>
-                        <div onClick={() => { console.log(item) }} className="w-[48%] h-[70px]  my-[10px] rounded-[10px] bg-[#202020] hover:bg-[#242424] flex no-underline">
+                        <div key={item} onClick={() => { console.log(item) }} className="w-[48%] h-[70px]  my-[10px] rounded-[10px] bg-[#202020] hover:bg-[#242424] flex no-underline">
                             <div className="w-[50px] h-[50px] bg-[#454545] rounded-[10px] m-[10px]"></div>
                             <div className="text-white text-left font-[1rem] flex items-center">
                                 {item !== undefined ? item : <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] " />}

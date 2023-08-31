@@ -38,9 +38,9 @@ const UrlCard = ( ) => {
             count += 1
 
             const newCard = (
-                <MuiLink target='_blank' href={url} style={{ width: `${cardWidth}px` }} className={`rounded-[10px] flex bg-[#202020] items-center flex-col rounded hover:bg-[#242424] no-underline break-words overflow-hidden`}>
+                <MuiLink key={item} target='_blank' href={url} style={{ width: `${cardWidth}px` }} className={`rounded-[10px] flex bg-[#202020] items-center flex-col rounded hover:bg-[#242424] no-underline break-words overflow-hidden`}>
                     {
-                        image === true //undefined
+                        image === undefined
                             ? <img src={image} width={`${cardWidth * 0.8}px`} height={`${cardWidth * 0.8}px`} style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, objectFit:'cover',margin: '10%', borderRadius: '10px'  }} />
                             : <div style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, backgroundColor: '#454545', margin: '10%', borderRadius:'10px' }} />
                     }
@@ -59,7 +59,7 @@ const UrlCard = ( ) => {
 
         for (let i = 0; i < cardAmount - count; i++) {
             setCard(prev => [...prev,
-            <MuiLink target="_blank" sx={{ width: `${cardWidth}px`, textDecoration: 'none', backgroundColor: '#191919', display: 'flex', alignItems: 'center', flexFlow: 'column', borderRadius: '10px', overflowWrap: 'anywhere', '&:hover': { backgroundColor: '#242424' } }}>
+                <MuiLink key={"brank"+i} target="_blank" sx={{ width: `${cardWidth}px`, textDecoration: 'none', backgroundColor: '#191919', display: 'flex', alignItems: 'center', flexFlow: 'column', borderRadius: '10px', overflowWrap: 'anywhere', '&:hover': { backgroundColor: '#242424' } }}>
                  <div style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, backgroundColor: '#454545', margin: '10%', borderRadius: '10px' }} />
                 
                 <div className="text-white py-[10%] w-[80%] text-left ">

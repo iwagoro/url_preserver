@@ -82,6 +82,7 @@ const Library = () => {
                         Object.keys(lists).map((list) => {
                             return (
                                 <TagButton
+                                    key = {list}
                                     type={selectedType ? 'tag' : 'preset'}
                                     label={list}
                                     color={lists[list] ? "purple" : "white"}
