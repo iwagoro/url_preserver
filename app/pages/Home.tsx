@@ -4,6 +4,7 @@ import {List  } from "@mui/icons-material";
 import Greet from '@/features/Greet'
 import UrlCard from "@/ui/UrlCard";
 import ListCard from "@/ui/ListCard";
+import AddUrl from "@/ui/AddUrl";
 
 const Home = () => {
     return (
@@ -30,6 +31,10 @@ const Home = () => {
                 <div id="ListCard" className="w-full">
                     <h1 className="font-extrabold text-4xl text-white px-[0] py-[5%]" >Your Presets</h1>
                     <ListCard type="preset" />
+                </div>
+
+                <div id="AddURL" className="w-full my-[5%]">
+                    <AddUrl />
                 </div>
                 
                 <div className="h-[10%]"></div>

@@ -32,7 +32,7 @@ const UrlCard = ( ) => {
         let count = 0;
 
         Object.keys(urls).slice(0,cardAmount).map(item => {
-            const image = urls[item].img
+            const image = urls[item].image
             const title = urls[item].title
             const url = urls[item].url
             count += 1
@@ -40,7 +40,7 @@ const UrlCard = ( ) => {
             const newCard = (
                 <MuiLink key={item} target='_blank' href={url} style={{ width: `${cardWidth}px` }} className={`rounded-[10px] flex bg-[#202020] items-center flex-col rounded hover:bg-[#242424] no-underline break-words overflow-hidden`}>
                     {
-                        image === undefined
+                        image !== undefined
                             ? <img src={image} width={`${cardWidth * 0.8}px`} height={`${cardWidth * 0.8}px`} style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, objectFit:'cover',margin: '10%', borderRadius: '10px'  }} />
                             : <div style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, backgroundColor: '#454545', margin: '10%', borderRadius:'10px' }} />
                     }
