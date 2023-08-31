@@ -16,7 +16,7 @@ const ModalMenu = ({ children, element, onClick }: { children?: React.ReactNode,
             <Menu open={open} onClose={() => setAnchorEl(null)} anchorEl={anchorEl} sx={{ "& .MuiMenu-paper": { backgroundColor: "#242424" } }}>
                 {
                     element && element.map((item) =>
-                        <MenuItem onClick={() => { setAnchorEl(null); onClick && onClick(item) }} sx={{ color: "white", fontSize: "0.8rem", "&:hover": { backgroundColor: "#454545" } }}>{item}</MenuItem>
+                        <MenuItem key={item} onClick={() => { setAnchorEl(null); onClick && onClick(item) }} sx={{ color: "white", fontSize: "0.8rem", "&:hover": { backgroundColor: "#454545" } }}>{item}</MenuItem>
                     )
                 }
             </Menu>
