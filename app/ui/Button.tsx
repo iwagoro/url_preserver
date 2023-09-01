@@ -37,7 +37,7 @@ const TagButton = ({ children, color, onClick, label, focus, sx, type = 'tag' ,i
         return (
             <ListItem className="w-full flex justify-between  items-center flex-row p-0 "  >
 
-                <div className="w-full cursor-pointer flex items-center hover:bg-[#191919]" onClick={() => onClick && onClick(label)}>
+                <div className="w-[75%] overflow-hidden cursor-pointer flex items-center hover:bg-[#191919]" onClick={() => onClick && onClick(label)}>
                     <img src={image} width="40px" height="40px" style={{ maxWidth: "40px", maxHeight: "40px", minWidth: "40px", minHeight: "40px", objectFit: 'cover', borderRadius: '10px' }} />
                     <List className="text-left px-[0.8rem]" >
                         <div style={{ fontSize: '1rem', color: color }} >
@@ -48,7 +48,7 @@ const TagButton = ({ children, color, onClick, label, focus, sx, type = 'tag' ,i
                         </div>
                     </List>
                 </div>
-                <IconButton disableRipple onClick={()=>label && deleteTag(label,urls)}>
+                <IconButton className="w-[25%]" disableRipple onClick={()=>label && deleteTag(label,urls)}>
                     <RemoveIcon sx={{ color: 'gray' }} />
                 </IconButton>
 

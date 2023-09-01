@@ -47,10 +47,13 @@ const AddTagtoDB = async (tag:string) => {
 }   
 
 const AddPresettoDB = async (preset:string) => {
+    const image = await fetch('https://source.unsplash.com/random/')
+        .then(data => data.url)
     const ref = doc(db, "User", 'test@gmail.com', 'Tags', preset)
     await setDoc(ref, {
         name: preset,
-        type: "preset"
+        type: "preset",
+        image: image
     })
 }
 

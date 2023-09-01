@@ -5,7 +5,6 @@ import UserDataProvider from "@/consts/provider/UserDataProvider";
 import SelectedDataProvider from './consts/provider/SelectedData';
 import { Inter } from '@next/font/google'
 const InterNormal = Inter({
-    weight: '400',
     subsets: ['latin-ext'],
 })
 

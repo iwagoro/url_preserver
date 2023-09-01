@@ -5,6 +5,7 @@ import { RGrid, RSidebar, RWall, RMain } from "@/components2/base/ResizableGrid"
 import {ListButton,TagButton} from "@/ui/Button";
 import Library from "@/pages/Library";
 import Home from "@/pages/Home";
+import Search from "@/pages/Search";
 import { SelectedData } from "@/consts/provider/SelectedData";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -15,6 +16,7 @@ const ForDesktop = () => {
 
     const {selectedTags,selectedPresets,setSelectedTags,setSelectedPresets, selectedUrls,selectedType} = React.useContext(SelectedData)
     const [selectedList,setSelectedList] = useState<string>("")
+    const [toggle,setToggle] = useState<boolean>(false)
 
     useEffect(()=>{
         setSelectedList(selectedType ? selectedTags : selectedPresets)
@@ -24,10 +26,10 @@ const ForDesktop = () => {
         <RGrid sidebarMaxSize={5} sidebarMinSize={2}>
             <RSidebar color='#121212'>
                 <Sidebar>
-                    <ListButton color="white" label="Home" onClick={()=>{setSelectedList("")}}>
+                    <ListButton color="white" label="Home" onClick={()=>{setSelectedList("");setToggle(false)}}>
                         <HomeOutlinedIcon />
                     </ListButton>
-                    <ListButton color="white" label="Search" >
+                    <ListButton color="white" label="Search" onClick={() => { setSelectedList("");setToggle(true) }}>
                         <SearchOutlinedIcon />
                     </ListButton>
                 </Sidebar>
@@ -38,10 +40,10 @@ const ForDesktop = () => {
                 </Sidebar>
             </RSidebar>
             <RWall color='#000000'/>
-            <RMain color='linear-gradient(180deg,#121212,#121212)'>
+            <RMain color=' linear-gradient(170deg,  rgba(156,36,141,1) 0.1%,#121212 40%)'>
                 <Main>
                     {
-                        selectedList === ""  && <Home/>
+                        selectedList === ""  && toggle !== true ?  <Home/> : <Search/>
                     }
                     {
                         selectedList !== "" && <SelectedList/>

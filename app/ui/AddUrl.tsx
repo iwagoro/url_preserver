@@ -6,6 +6,8 @@ import createThumbnail from '@/lib/LinkedPreview'
 
 import { UserData } from '@/consts/provider/UserDataProvider';
 import { add, set } from 'lodash';
+import TagIcon from '@mui/icons-material/Tag';
+import TurnedInIcon from '@mui/icons-material/TurnedIn';
 
 import { addUrltoDB } from "@/features/DataBaseCRUD"
 
@@ -15,21 +17,33 @@ const AddUrl = () => {
     const {originTags,originPresets} = useContext(UserData)
     const [selectedTags,setSelectedTags] = useState<string[]>([])
     const { register,setValue,getValues } = useForm();
+    const [toggle,setToggle] = useState<boolean>(false)
+    const [lists,setLists] = useState<Record<string,boolean>>({})
+
+    useEffect(()=>{
+        if(toggle){
+            setLists(originTags)
+        }else{
+            setLists(originPresets)
+        }
+    },[toggle])
 
     const submitURL = async () => {
         const urlValue =getValues("url_value");
-        let sendingData = await createThumbnail(urlValue);
-        sendingData = { ...sendingData, tags: selectedTags,url:urlValue };
-        await addUrltoDB(sendingData);
-        setValue("url_value", "");
-        setSelectedTags([]);
+        if(urlValue !== ""){
+            let sendingData = await createThumbnail(urlValue);
+            sendingData = { ...sendingData, tags: lists, url: urlValue };
+            await addUrltoDB(sendingData);
+            setValue("url_value", "");
+            setLists({});
+        }
     }
 
 
     return (
         <div className="bg-[#202020] rounded-[10px]">
             <div className="w-full h-[100px] flex flex-between">
-                <div className='w-[40%] text-white text-[2rem] flex justify-center items-center'>
+                <div className='w-[40%] font-semibold text-white text-[2rem] flex justify-center items-center'>
                     Add Your URL
                 </div>
                 <div className='w-[50%] flex justify-center items-center'>
@@ -50,11 +64,16 @@ const AddUrl = () => {
                         <ChevronRightIcon fontSize="small" />
                     </IconButton>
                 </div>
+                
             </div>
-            <div className="w-full p-[20px] flex flex-between flex-wrap">
-
+            <div className="w-full p-[20px] flex flex-between flex-wrap  items-center">
+                <div className="w-[20%] flex justify-center">
+                    <IconButton disableRipple className="bg-[#303030] w-[40px] h-[40px] rounded-[15px]" onClick={() => setToggle(prev => prev = !prev)}>
+                        {toggle ? <TagIcon fontSize="large" sx={{ color: '#808080' }} /> : <TurnedInIcon fontSize="large" sx={{ color: '#808080' }} />}
+                    </IconButton>
+                </div>
                 {
-                    Object.keys(originTags).map(item => {
+                    Object.keys(lists).map(item => {
                         return (
                             <Chip 
                                 key={"Chip"+item} 

@@ -7,17 +7,22 @@ import createThumbnail from '@/lib/LinkedPreview'
 import { UserData } from '@/consts/provider/UserDataProvider';
 import { add, set } from 'lodash';
 
-import { addUrltoDB ,AddTagtoDB} from "@/features/DataBaseCRUD"
+import { addUrltoDB ,AddTagtoDB, AddPresettoDB} from "@/features/DataBaseCRUD"
 
 
-const AddTag = () => {
+const AddList = () => {
 
     const { originTags, originPresets } = useContext(UserData)
     const [selectedTags, setSelectedTags] = useState<string[]>([])
+    const [toggle, setToggle] = useState<boolean>(false)
     const { register, setValue, getValues } = useForm();
 
     const submitTag = async () => {
-        AddTagtoDB(getValues("url_value"))
+        if(toggle){
+            AddTagtoDB(getValues("url_value"))
+        }else{
+            AddPresettoDB(getValues("url_value"))
+        }
         setValue("url_value", "");
     }
 
@@ -25,8 +30,9 @@ const AddTag = () => {
     return (
         <div className="bg-[#202020] rounded-[10px]">
             <div className="w-full h-[100px] flex flex-between">
-                <div className='w-[40%] text-white text-[2rem] flex justify-center items-center'>
-                    Add Your Tag
+                <div className='w-[40%] font-semibold text-white text-[2rem] flex justify-center items-center hover:text-[magenta]' onClick={()=>{setToggle(prev=>prev=!prev)}}>
+                    
+                    {toggle ? 'Add Your Tag' : 'Add Your Preset'}
                 </div>
                 <div className='w-[50%] flex justify-center items-center'>
                     <TextField
@@ -52,5 +58,5 @@ const AddTag = () => {
     )
 }
 
-export default AddTag
+export default AddList
 
