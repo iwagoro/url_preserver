@@ -43,7 +43,7 @@ const AddUrl = () => {
     return (
         <div className="bg-[#202020] rounded-[10px]">
             <div className="w-full h-[100px] flex flex-between">
-                <div className='w-[40%] font-semibold text-white text-[2rem] flex justify-center items-center'>
+                <div className='w-[30%] pl-[10%] font-semibold text-white flex justify-left items-center hover:text-[magenta]' style={{fontSize:'clamp(15px,1vw,30px)'}}>
                     Add Your URL
                 </div>
                 <div className='w-[50%] flex justify-center items-center'>
@@ -80,7 +80,7 @@ const AddUrl = () => {
                                 label={item} 
                                 variant="outlined" 
                                 sx={{ color: (selectedTags.includes(item)) ? "magenta" : "white" }} 
-                                className="m-[5px]" 
+                                className="m-[5px] text-[0.5rem]" 
                                 onClick={() => {
                                     if (selectedTags.includes(item)) {
                                         setSelectedTags(prev => prev.filter(tag => tag !== item))

@@ -12,7 +12,7 @@ const InterNormal = Inter({
 
 const App = () => {
 
-    const isDesktop = useMediaQuery('(min-width:1024px)')
+    const isDesktop = useMediaQuery('(min-width:600px)')
 
     return (
         <UserDataProvider>

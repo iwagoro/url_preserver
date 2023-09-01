@@ -18,7 +18,7 @@ import { IconButton } from "@mui/material";
 const ForDesktop = () => {
 
     const { selectedTags, selectedPresets, setSelectedTags, setSelectedPresets, selectedUrls, selectedType } = React.useContext(SelectedData)
-    const [toggle, setToggle] = useState<number>(0)
+    const [toggle, setToggle] = useState<number>(1)
 
     useEffect(() => {
         
@@ -36,17 +36,17 @@ const ForDesktop = () => {
                     }
                 </Main>
             </MMain>
-            <MFooter>
-                <div className="w-full h-full flex justify-center">
+            <MFooter >
+                <div className="w-full h-full flex justify-center " style={{ backgroundImage:' linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.96) 50%)'}}>
                     <div className="w-[80%] h-full flex justify-between items-center ">
                         <IconButton disableRipple onClick={() => {setToggle(1) }}>
-                            <HomeOutlinedIcon fontSize='large' sx={{ color: 'white' }} />
+                            <HomeOutlinedIcon fontSize='medium' sx={{ color: 'white' }} />
                         </IconButton>
                         <IconButton disableRipple onClick={() => {setToggle(2) }}>
-                            <SearchOutlinedIcon fontSize='large' sx={{ color: 'white' }} />
+                            <SearchOutlinedIcon fontSize='medium' sx={{ color: 'white' }} />
                         </IconButton>
                         <IconButton disableRipple onClick={() => { setToggle(3) }}>
-                            <FilterNoneOutlinedIcon fontSize='large' sx={{ color: 'white' }} />
+                            <FilterNoneOutlinedIcon fontSize='medium' sx={{ color: 'white' }} />
                         </IconButton>
                     </div>
                 </div>
