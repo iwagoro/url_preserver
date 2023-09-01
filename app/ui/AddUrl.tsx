@@ -27,7 +27,7 @@ const AddUrl = () => {
         }else{
             setLists(originPresets)
         }
-    },[toggle])
+    },[toggle,originTags,originPresets])
 
     const submitURL = async () => {
         const urlValue =getValues("url_value");

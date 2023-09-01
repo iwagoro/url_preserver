@@ -1,9 +1,13 @@
 import React from "react";
 import { debounce } from 'lodash'
 import { useState, useEffect, useRef, useContext } from "react";
-import { Link as MuiLink } from "@mui/material";
+import { Link as MuiLink ,TextField} from "@mui/material";
 import { UserData } from "@/consts/provider/UserDataProvider";
+import { useForm } from "react-hook-form";
 import UrlCard from "@/ui/UrlCard";
+import { BorderRight } from "@mui/icons-material";
+
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 const Search = () => {  
 
@@ -12,6 +16,7 @@ const Search = () => {
     const [targetWidth, setTargetWidth] = useState<number>(0);
     const [cardAmount, setCardAmount] = useState<number>(3)
     const parentRef = useRef(null);
+    const { register,setValue,getValues } = useForm();
 
 
     useEffect(() => {
@@ -69,7 +74,17 @@ const Search = () => {
 
 
     return (
-        <div className="w-full h-full" ref={parentRef}>
+        <div className="w-full h-full " ref={parentRef}>
+
+            <div className="w-full flex justify-center">
+                <div style={{ position: 'relative', left: '10px' }}>
+                    <SearchOutlinedIcon fontSize='medium' sx={{ color: 'white' }} />
+                </div>
+                <div className="relative">
+                    <input type='text' placeholder="Search" className="w-full h-[40px] pl-[40px] bg-transparent border border-white rounded-[30px]" />
+                </div>
+            </div>
+
             <div className='w-full font-semibold text-white text-[2rem] my-[5%] flex justify-left items-center'>
                 URL
             </div>
