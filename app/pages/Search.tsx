@@ -52,7 +52,7 @@ const Search = () => {
         const cardWidth = targetWidth / cardAmount
         Object.keys(urls).map( (url,index) => {
             const newCard = (
-                <img src={urls[url].image} width={`${cardWidth}px`} height={`${cardWidth}px`} style={{ width: `${cardWidth}px`, height: `${cardWidth}px`, objectFit: 'cover', borderRadius: '10px' }}></img>
+                <img key={'searchurl'+index} src={urls[url].image} width={`${cardWidth}px`} height={`${cardWidth}px`} style={{ width: `${cardWidth}px`, height: `${cardWidth}px`, objectFit: 'cover', borderRadius: '10px' }}></img>
             )
             setUrlCard(prev => [...prev,newCard])
         })
@@ -60,7 +60,7 @@ const Search = () => {
         if(Object.keys(urls).length < cardAmount){
             for (let i = 0; i < cardAmount - Object.keys(urls).length; i++){
                 setUrlCard(prev => [...prev,(
-                    <div style={{ width: `${cardWidth}px`, height: `${cardWidth}px`, backgroundColor: '#454545', borderRadius: '10px' }}></div>
+                    <div key={"randomsearch"+i} style={{ width: `${cardWidth}px`, height: `${cardWidth}px`, backgroundColor: '#454545', borderRadius: '10px' }}></div>
                 )])
             }
         }
