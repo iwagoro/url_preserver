@@ -8,6 +8,7 @@ import { UserData } from '@/consts/provider/UserDataProvider';
 import { add, set } from 'lodash';
 import TagIcon from '@mui/icons-material/Tag';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 import { addUrltoDB } from "@/features/DataBaseCRUD"
 
@@ -41,24 +42,52 @@ const AddUrl = () => {
 
 
     return (
-        <div className="w-full bg-[#202020] flex justify-center h-[100px]  rounded-[10px]">
-            <div className="w-[90%] h-full  flex justify-between items-center">
-                <h3 className='w-[30%] hover:text-[magenta]' >
-                    Add Your URL
-                </h3>
-                    <TextField
-                        InputLabelProps={{ style: { color: "#808080" } }}
-                        className="w-[50%] text-[1rem] text-white "
-                        sx={{ input: { color: "white" } }}
-                        placeholder="Search"
-                        focused
-                        size="small"
-                        color="secondary"
-                        {...register("url_value")}
-                    />
-                    <IconButton disableRipple className="bg-[#303030] w-[40px] h-[40px] text-white rounded-[15px]" onClick={()=>submitURL()}>
-                        <ChevronRightIcon fontSize="small" />
-                    </IconButton>
+        <div className="w-full bg-[#202020] flex flex-col  items-center   rounded-[10px]">
+            <div className="w-[90%] h-full  flex justify-between items-center pt-[3%]">
+                <h3 className='w-[30%] hover:text-[magenta]' >Add Your URL</h3>
+                <TextField
+                    InputLabelProps={{ style: { color: "#808080" } }}
+                    className="w-[50%] text-[1rem] text-white "
+                    sx={{ input: { color: "white" } }}
+                    placeholder="Search"
+                    focused
+                    size="small"
+                    color="secondary"
+                    {...register("url_value")}
+                />
+                <IconButton disableRipple className="bg-[#303030] w-[40px] h-[40px] text-white rounded-[15px]" onClick={()=>submitURL()}>
+                    <ChevronRightIcon fontSize="small" />
+                </IconButton>
+            </div>
+            <div className="w-[90%] flex items-center ">
+                <div className="w-[30%] flex flex-row items-center">
+                        <IconButton disableRipple className=" w-[30px] h-[30px] rounded-[15px]" onClick={() => setToggle(prev => prev = !prev)}>
+                            <AutorenewIcon fontSize="medium" sx={{ color: "white" }} />
+                        </IconButton>
+                        <p >{toggle ? ' Tag ' : ' Preset '}</p>
+                </div>
+                <div className="w-[70%] m-[3%] ">
+                    {
+                        Object.keys(lists).map(item => {
+                            return (
+                                <Chip
+                                    key={"Chip" + item}
+                                    label={item}
+                                    variant="outlined"
+                                    sx={{ color: (selectedTags.includes(item)) ? "magenta" : "white" }}
+                                    className="m-[5px] text-[0.7rem]"
+                                    onClick={() => {
+                                        if (selectedTags.includes(item)) {
+                                            setSelectedTags(prev => prev.filter(tag => tag !== item))
+                                        } else {
+                                            setSelectedTags(prev => [...prev, item])
+                                        }
+                                    }}
+                                />
+                            )
+                        })
+                    }
+                </div>
             </div>
             
         </div>
@@ -68,29 +97,4 @@ const AddUrl = () => {
 export default AddUrl
 
 /**<div className="w-full p-[20px] flex flex-between flex-wrap  items-center">
-                <div className="w-[20%] flex justify-center">
-                    <IconButton disableRipple className="bg-[#303030] w-[40px] h-[40px] rounded-[15px]" onClick={() => setToggle(prev => prev = !prev)}>
-                        {toggle ? <TagIcon fontSize="large" sx={{ color: '#808080' }} /> : <TurnedInIcon fontSize="large" sx={{ color: '#808080' }} />}
-                    </IconButton>
-                </div>
-                {
-                    Object.keys(lists).map(item => {
-                        return (
-                            <Chip 
-                                key={"Chip"+item} 
-                                label={item} 
-                                variant="outlined" 
-                                sx={{ color: (selectedTags.includes(item)) ? "magenta" : "white" }} 
-                                className="m-[5px] text-[0.5rem]" 
-                                onClick={() => {
-                                    if (selectedTags.includes(item)) {
-                                        setSelectedTags(prev => prev.filter(tag => tag !== item))
-                                    } else {
-                                        setSelectedTags(prev => [...prev, item])
-                                    }
-                                }} 
-                            />
-                        )
-                    })
-                }
-            </div> */
+                 */

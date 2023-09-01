@@ -93,6 +93,26 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
         document.addEventListener("mouseup", handleMouseUp);
     };
 
+    
+    
+
+    const handleTouchDown = (event:any) => {
+        const startX = event.touches[0].pageX;
+        const handleTouchMove = (event:any) => {
+            const width = ResizableWidth + (event.touches[0].pageX - startX);
+            const maxWidth = (sidebarMaxSize / 10) * parentWidth.current.clientWidth;
+            const constrainedWidth = Math.min(Math.max(width, (sidebarMinSize / 10) * parentWidth.current.clientWidth), maxWidth);
+            setResizableWidth(constrainedWidth);
+        };
+        const handleTouchEnd = () => {
+            document.removeEventListener("touchmove", handleTouchMove);
+            document.removeEventListener("touchend", handleTouchEnd);
+        };
+        document.addEventListener("touchmove", handleTouchMove);
+        document.addEventListener("touchend", handleTouchEnd);
+    };
+
+
     return (
 
         <div id="background" style={{ width: "100%", height: "100%", display: "flex", overflow: "hidden", backgroundColor: color }} ref={parentWidth}>
@@ -107,7 +127,7 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
                     child
                 ))}
             </div>
-            <div id="wall" style={{ cursor: "ew-resize" }} onMouseDown={handleMouseDown}>
+            <div id="wall" style={{ cursor: "ew-resize" }} onMouseDown={handleMouseDown} onTouchStart={handleTouchDown}>
                 {children && children[children.length - 2]}
              </div>
             <div

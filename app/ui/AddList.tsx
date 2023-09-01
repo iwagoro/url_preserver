@@ -35,16 +35,16 @@ const AddList = () => {
                         {toggle ? 'Add Your Tag' : 'Add Your Preset'}
                     </h3>
 
-                    <TextField
-                        InputLabelProps={{ style: { color: "#808080" } }}
-                        className="w-[50%] text-[1rem] text-white "
-                        sx={{ input: { color: "white" } }}
-                        placeholder="Search"
-                        focused
-                        size="small"
-                        color="secondary"
-                        {...register("url_value")}
-                    />
+                <TextField
+                    InputLabelProps={{ style: { color: "#808080" } }}
+                    className="w-[50%] text-[1rem] text-white "
+                    sx={{ input: { color: "white" } }}
+                    placeholder="Search"
+                    focused
+                    size="small"
+                    color="secondary"
+                    {...register("url_value")}
+                />
 
                     <IconButton disableRipple className="bg-[#303030] w-[40px] h-[40px] text-white rounded-[15px]" onClick={() => submitTag()}>
                         <ChevronRightIcon fontSize="small" />

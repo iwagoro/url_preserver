@@ -12,6 +12,8 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
+
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { or } from "firebase/firestore";
 
 const Library = () => {
@@ -74,8 +76,12 @@ const Library = () => {
             </ListItem>  
 
             <ListItem id="Chips">
-                <Chip label="Tag" variant="outlined" sx={{ color: !selectedType ? "#808080" : "white" }} className="mx-[5px]" onClick={()=>{setSelectedType(true)}} />
-                <Chip label="Presets" variant="outlined" sx={{ color: selectedType ? "#808080" : "white" }} className="mx-[5px]" onClick={() => { setSelectedType(false) }} />
+                <div className="cursor-pointer flex flex-row items-center brightness-[60%] hover:brightness-[100%]" onClick={() => setSelectedType(prev => prev = !prev)}>
+                    <IconButton disableRipple className=" w-[30px] h-[30px] rounded-[15px]" >
+                        <AutorenewIcon fontSize="medium" sx={{ color: "white" }} />
+                    </IconButton>
+                    <p className="">{selectedType ? ' Tag ' : ' Preset '}</p>
+                </div>
             </ListItem>
 
             <ListItem id="Search" className="w-full flex justify-between">
