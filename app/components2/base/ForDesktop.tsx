@@ -12,7 +12,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SelectedList from "@/pages/SelectedList";
 
-const ForDesktop = () => {
+const ForMobile = () => {
 
     const {selectedTags,selectedPresets,setSelectedTags,setSelectedPresets, selectedUrls,selectedType} = React.useContext(SelectedData)
     const [selectedList,setSelectedList] = useState<string>("")
@@ -54,4 +54,4 @@ const ForDesktop = () => {
     )
 }
 
-export default ForDesktop
+export default ForMobile
