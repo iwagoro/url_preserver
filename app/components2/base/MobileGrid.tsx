@@ -7,7 +7,7 @@ const MobileGridMainContainerr = styled.div <{ color?: string, customStyle?: { [
     overflow: scroll;
     width: 100%;
     height: 100%;
-    background-image: ${(props) => props.color ? props.color : 'linear-gradient(90deg, #000000, #000000)'};
+    background-image: linear-gradient(170deg,  rgba(156,36,141,1) 1%,rgba(0,0,0,1) 30%);
 `;
 
 const MobileGridFooterContainer = styled.div <{ color?: string, customStyle?: { [key: string]: string } }>`

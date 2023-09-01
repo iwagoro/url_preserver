@@ -23,7 +23,7 @@ const ForMobile = () => {
     },[selectedTags,selectedPresets])
 
     return (
-        <RGrid sidebarMaxSize={5} sidebarMinSize={2}>
+        <RGrid sidebarMaxSize={5} sidebarMinSize={2.5}>
             <RSidebar color='#121212'>
                 <Sidebar>
                     <ListButton color="white" label="Home" onClick={()=>{setSelectedList("");setToggle(false)}}>

@@ -6,6 +6,31 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+html{
+    font-size: 15px;
+    
+}
 
-body {
+@layer components{
+    h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+        }
+    
+    h2{
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        white-space: pre-wrap;
+    }
 }

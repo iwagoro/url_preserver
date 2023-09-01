@@ -20,17 +20,17 @@ const Home = () => {
                 </div>
 
                 <div id="ListCard" className="w-full">
-                    <h1 className="font-extrabold text-4xl text-white px-[0] py-[5%]" >Your Tags</h1>
+                    <h2 className="px-[0] py-[5%]" >Your Tags</h2>
                     <ListCard type="tag"/>
                 </div>
 
                 <div id="UrlCard">
-                    <h1 className="font-extrabold text-4xl text-white px-[0] py-[5%]" >Your URL</h1>
+                    <h2 className="px-[0] py-[5%]" >Your URL</h2>
                     <UrlCard/>
                 </div>
 
                 <div id="ListCard" className="w-full">
-                    <h1 className="font-extrabold text-4xl text-white px-[0] py-[5%]" >Your Presets</h1>
+                    <h2 className="px-[0] py-[5%]" >Your Presets</h2>
                     <ListCard type="preset" />
                 </div>
 

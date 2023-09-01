@@ -26,9 +26,7 @@ const Greet = () => {
     }, []);
 
     return (
-        <div id="Greet" className="w-full h-full">
-            <h1 className="font-extrabold text-[4rem] text-white px-[0] py-[5%]" >{greet}</h1>
-        </div>
+            <h1 className="px-[0] py-[5%]" >{greet}</h1>
     )
 }
 

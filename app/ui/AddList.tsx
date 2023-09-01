@@ -28,15 +28,16 @@ const AddList = () => {
 
 
     return (
-        <div className="bg-[#202020] rounded-[10px]">
-            <div className="w-full h-[100px] flex flex-between">
-                <div className='w-[30%] pl-[10%] font-semibold text-white text-[clamp(0.5rem,1rem,2rem)] flex justify-left items-center hover:text-[magenta]' onClick={()=>{setToggle(prev=>prev=!prev)}}>
-                    {toggle ? 'Add Your Tag' : 'Add Your Preset'}
-                </div>
-                <div className='w-[50%] flex justify-center items-center'>
+        <div className=" w-full bg-[#202020] flex justify-center h-[100px]  rounded-[10px] ">
+            
+            <div className="w-[90%] h-full  flex justify-between items-center ">
+                    <h3 className=' w-[30%] hover:text-[magenta]' onClick={() => { setToggle(prev => prev = !prev) }}>
+                        {toggle ? 'Add Your Tag' : 'Add Your Preset'}
+                    </h3>
+
                     <TextField
                         InputLabelProps={{ style: { color: "#808080" } }}
-                        className="w-[80%] text-[1rem] text-white "
+                        className="w-[50%] text-[1rem] text-white "
                         sx={{ input: { color: "white" } }}
                         placeholder="Search"
                         focused
@@ -45,13 +46,11 @@ const AddList = () => {
                         {...register("url_value")}
                     />
 
-                </div>
-                <div className="w-[10%] flex justify-left items-center">
                     <IconButton disableRipple className="bg-[#303030] w-[40px] h-[40px] text-white rounded-[15px]" onClick={() => submitTag()}>
                         <ChevronRightIcon fontSize="small" />
                     </IconButton>
-                </div>
             </div>
+
             
         </div>
     )

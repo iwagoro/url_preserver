@@ -39,7 +39,7 @@ const TagButton = ({ children, color, onClick, label, focus, sx, type = 'tag' ,i
 
                 <div className="w-[75%] overflow-hidden cursor-pointer flex items-center hover:bg-[#191919]" onClick={() => onClick && onClick(label)}>
                     <img src={image} width="40px" height="40px" style={{ maxWidth: "40px", maxHeight: "40px", minWidth: "40px", minHeight: "40px", objectFit: 'cover', borderRadius: '10px' }} />
-                    <List className="text-left px-[0.8rem]" >
+                    <List className="text-left px-[0.8rem] whitespace-nowrap" >
                         <div style={{ fontSize: '1rem', color: color }} >
                             {label}
                         </div>
