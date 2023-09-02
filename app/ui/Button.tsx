@@ -30,16 +30,16 @@ const ListButton = ({ children, color, onClick, label, focus, sx, }: { children?
     
 }
 
-const TagButton = ({ children, color, onClick, label, focus, sx, type = 'tag' ,image}: { children?: React.ReactNode, color?: string, onClick?: (arg: any) => any, label?: string, focus?: Boolean, sx?: { [key: string]: string }, type?: string ,image?:string}) => {
+const TagButton = ({  color, onClick, label,  type = 'tag' ,image,width}: { color?: string, onClick?: (arg: any) => any, label?: string, type?: string ,image?:string,width:string}) => {
 
         const { urls } = React.useContext(UserData)
 
         return (
-            <ListItem className="w-full flex justify-between  items-center flex-row p-0 "  >
+            <ListItem className="w-full flex justify-between  items-center flex-row p-0 my-[10px]"  >
 
                 <div className="w-[75%] overflow-hidden cursor-pointer flex items-center hover:bg-[#191919]" onClick={() => onClick && onClick(label)}>
-                    <img src={image} width="40px" height="40px" style={{ maxWidth: "40px", maxHeight: "40px", minWidth: "40px", minHeight: "40px", objectFit: 'cover', borderRadius: '10px' }} />
-                    <List className="text-left px-[0.8rem] whitespace-nowrap" >
+                    <img src={image} width={`${width}px`} height={`${width}px`} style={{ maxWidth: `${width}px`, maxHeight: `${width}px`, minWidth: `${width}px`, minHeight: `${width}px`, objectFit: 'cover', borderRadius: '10px' }} />
+                    <List className="text-left px-[0.8rem] py-[0] whitespace-nowrap" >
                         <div style={{ fontSize: '1rem', color: color }} >
                             {label}
                         </div>
@@ -48,7 +48,7 @@ const TagButton = ({ children, color, onClick, label, focus, sx, type = 'tag' ,i
                         </div>
                     </List>
                 </div>
-                <IconButton className="w-[25%]" disableRipple onClick={()=>label && deleteTag(label,urls)}>
+                <IconButton className="" disableRipple onClick={()=>label && deleteTag(label,urls)}>
                     <RemoveIcon sx={{ color: 'gray' }} />
                 </IconButton>
 

@@ -42,6 +42,7 @@ const Library = () => {
                 
                 setListCard(prev => [...prev, (
                     <TagButton
+                        width='40'
                         key={"TagButton"+list}
                         type={selectedType ? 'tag' : 'preset'}
                         label={list}
@@ -65,6 +66,9 @@ const Library = () => {
 
     return (
         <div id="Library" >
+
+            
+
             <ListItem id="Buttons" className = "w-full flex justify-between">
                 <IconButton disableRipple className="p-[5px] text-white brightness-[60%]">
                     <FilterNoneOutlinedIcon fontSize="small"/>

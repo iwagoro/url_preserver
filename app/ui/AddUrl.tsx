@@ -66,7 +66,7 @@ const AddUrl = () => {
                         </IconButton>
                         <p >{toggle ? ' Tag ' : ' Preset '}</p>
                 </div>
-                <div className="w-[70%] m-[3%] ">
+                <div className="w-[70%] my-[3%] ">
                     {
                         Object.keys(lists).map(item => {
                             return (
