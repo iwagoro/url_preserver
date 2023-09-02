@@ -58,4 +58,20 @@ html{
         }
     }
 
+    #rotateIcon:hover .rotateIcon{
+        animation-name: rotateIcon;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    @keyframes rotateIcon {
+        from{
+            transform: rotate(0deg);
+        }
+        to{
+            transform: rotate(360deg);
+        }
+    }
+
 }

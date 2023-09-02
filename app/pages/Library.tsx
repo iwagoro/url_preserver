@@ -80,9 +80,9 @@ const Library = () => {
             </ListItem>  
 
             <ListItem id="Chips">
-                <div className="cursor-pointer flex flex-row items-center brightness-[60%] hover:brightness-[100%]" onClick={() => setSelectedType(prev => prev = !prev)}>
-                    <IconButton disableRipple className=" w-[30px] h-[30px] rounded-[15px]" >
-                        <AutorenewIcon fontSize="medium" sx={{ color: "white" }} />
+                <div id="rotateIcon" className="cursor-pointer flex flex-row items-center brightness-[60%] hover:brightness-[100%]" onClick={() => setSelectedType(prev => prev = !prev)}>
+                    <IconButton disableRipple className="w-[30px] h-[30px] rounded-[15px]" >
+                        <AutorenewIcon className="rotateIcon" fontSize="medium" sx={{ color: "white" }} />
                     </IconButton>
                     <p className="">{selectedType ? ' Tag ' : ' Preset '}</p>
                 </div>
@@ -125,7 +125,6 @@ const Library = () => {
                     }
                 </List>
             </ListItem>
-            <div className="h-[10vh]"></div>
         </div>
     )
 }

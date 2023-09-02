@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from "react";
 import Main from "@/components2/base/Main";
 import Sidebar from "@/components2/base/Sidebar";
-import { RGrid, RSidebar, RWall, RMain } from "@/components2/base/ResizableGrid";
+import { RGrid, RSidebar, RSidebar2, RWall, RMain } from "@/components2/base/ResizableGrid";
 import {ListButton,TagButton} from "@/ui/Button";
 import Library from "@/pages/Library";
 import Home from "@/pages/Home";
@@ -34,11 +34,11 @@ const ForMobile = () => {
                     </ListButton>
                 </Sidebar>
             </RSidebar>
-            <RSidebar color='#121212'>
+            <RSidebar2 color='#121212'>
                 <Sidebar>
                     <Library/>
                 </Sidebar>
-            </RSidebar>
+            </RSidebar2>
             <RWall color='#000000'/>
             <RMain color=' linear-gradient(170deg,  rgba(156,36,141,1) 0.1%,#121212 40%)'>
                 <Main>

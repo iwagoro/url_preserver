@@ -5,12 +5,21 @@ import React,{useEffect, useState,useRef,ReactElement,} from "react";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const ResizableSidebarContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
+const ResizableSidebarContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string }}>`
     width: calc(100% - 10px); 
+    background-color: ${(props) => props.color ? props.color : 'black'};
+    margin: 10px 0 0px 10px;
+    ${(props) => props.customStyle};
+`;
+
+const ResizableSidebarContainer2 = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
+    width: calc(100% - 10px); 
+    height: calc(100% - 20px);
     background-color: ${(props) => props.color ? props.color : 'black'};
     margin: 10px 0 10px 10px;
     ${(props) => props.customStyle};
 `;
+
 
 const ResizableWallContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
     height: 100%;
@@ -28,10 +37,18 @@ const ResizableMainContainer = styled(Card) <{ color?: string, customStyle?: { [
     ${(props) => props.customStyle};
 `;
 
+const RSidebar2 = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
+    return (
+        <ResizableSidebarContainer2 color={color} customStyle={sx} >
+            {children}
+        </ResizableSidebarContainer2>
+    )
+}
+
 
 const RSidebar = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string }}) => {
     return(
-        <ResizableSidebarContainer color={color} customStyle={sx}>
+        <ResizableSidebarContainer color={color} customStyle={sx} >
             {children}
         </ResizableSidebarContainer>
     )
@@ -120,15 +137,19 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
                 id="sidebar"
                 style={{
                     width: ResizableWidth + "px",
+                    height:'100%',
                     overflow: "scroll",
+                    display: "flex",
+                    flexDirection: "column",
                 }}
             >
-                {children && children.slice(0, children.length - 2).map((child, index) => (
-                    child
-                ))}
+                {children && children[0]}
+                <div style={{flexGrow:1}}>
+                    {children && children[1]}
+                </div>
             </div>
             <div id="wall" style={{ cursor: "ew-resize" }} onMouseDown={handleMouseDown} onTouchStart={handleTouchDown}>
-                {children && children[children.length - 2]}
+                {children && children[2]}
              </div>
             <div
                 id="main"
@@ -139,7 +160,7 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
                 }}
             >
                 
-                {children && children[children.length-1]}
+                {children && children[3]}
                 
             </div>
         </div>
@@ -150,4 +171,4 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
 
 }
 
-export {RGrid, RMain, RSidebar, RWall }
+export {RGrid, RMain, RSidebar, RWall ,RSidebar2}

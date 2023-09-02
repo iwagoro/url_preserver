@@ -17,7 +17,6 @@ const Search = () => {
     const [TagCard,setTagCard] = useState<JSX.Element[]>([])
     const [PresetCard,setPresetCard] = useState<JSX.Element[]>([])
     const [searchText,setSearchText] = useState<string>("")
-    const parentRef = useRef(null);
 
 
     useEffect( () => {
@@ -28,7 +27,7 @@ const Search = () => {
                     <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
                         <p  style={{fontSize:'2vw'}}>{urls[url].title}</p>
                     </div>
-                    <img key={'searchurl' + index} width='60%' height='70%' src={urls[url].image} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                    <img key={'searchurl' + index}  src={urls[url].image} style={{ margin: '5%', objectFit: 'cover', borderRadius: '10px' }}></img>
                 </div>
                 
             )
@@ -42,7 +41,7 @@ const Search = () => {
                     <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
                         <p  style={{fontSize:'2vw'}}>{tag}</p>
                     </div>
-                    <img key={'searchtag' + index} width='60%' height='70%' src={tags[tag]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                    <img key={'searchtag' + index}  src={tags[tag]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
                 </div>
                 
             )
@@ -56,7 +55,7 @@ const Search = () => {
                     <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
                         <p  style={{fontSize:'2vw'}}>{preset}</p>
                     </div>
-                    <img key={'searchpreset' + index} width='60%' height='70%' src={presets[preset]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                    <img key={'searchpreset' + index} src={presets[preset]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
                 </div>
                 
             )
@@ -73,7 +72,7 @@ const Search = () => {
                     <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
                         <p  style={{fontSize:'2vw'}}>{urls[url].title}</p>
                     </div>
-                    <img key={'searchurl' + index} width='60%' height='70%' src={urls[url].image} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                    <img key={'searchurl' + index}  src={urls[url].image} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
                 </div>
                 
             )
@@ -86,7 +85,7 @@ const Search = () => {
                     <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
                         <p  style={{fontSize:'2vw'}}>{tag}</p>
                     </div>
-                    <img key={'searchtag' + index} width='60%' height='70%' src={tags[tag]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                    <img key={'searchtag' + index}  src={tags[tag]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
                 </div>
                 
             )
@@ -99,7 +98,7 @@ const Search = () => {
                     <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
                         <p  style={{fontSize:'2vw'}}>{preset}</p>
                     </div>
-                    <img key={'searchpreset' + index} width='60%' height='70%' src={presets[preset]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                    <img key={'searchpreset' + index}  src={presets[preset]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
                 </div>
                 
             )
