@@ -1,8 +1,9 @@
 import React from "react";
-import { debounce } from 'lodash'
+import { debounce, set } from 'lodash'
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link as MuiLink ,TextField} from "@mui/material";
 import { UserData } from "@/consts/provider/UserDataProvider";
+import { filterLists, sortLists, addList } from "@/features/ListCRUD";
 import { useForm } from "react-hook-form";
 import UrlCard from "@/ui/UrlCard";
 import { BorderRight } from "@mui/icons-material";
@@ -13,47 +14,152 @@ const Search = () => {
 
     const {urls,tags,presets} = useContext(UserData)
     const [UrlCard,setUrlCard] = useState<JSX.Element[]>([])
+    const [TagCard,setTagCard] = useState<JSX.Element[]>([])
+    const [PresetCard,setPresetCard] = useState<JSX.Element[]>([])
+    const [searchText,setSearchText] = useState<string>("")
     const parentRef = useRef(null);
-    const { register,setValue,getValues } = useForm();
 
 
     useEffect( () => {
         setUrlCard([])
-        Object.keys(urls).map( (url,index) => {
+        Object.keys(urls).slice(0,10).map( (url,index) => {
             const newCard = (
-                <div className="w-[40%] h-[10vh] bg-[#808080]"></div>
+                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
+                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
+                        <p  style={{fontSize:'2vw'}}>{urls[url].title}</p>
+                    </div>
+                    <img key={'searchurl' + index} width='60%' height='70%' src={urls[url].image} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                </div>
+                
             )
             setUrlCard(prev => [...prev,newCard])
         })
 
-        //<img key={'searchurl'+index} width='40%' height='10vh' src={urls[url].image}  style={{margin:'5%', width:'40%',height:'10vh', objectFit: 'cover', borderRadius: '10px' }}></img>
+        setTagCard([])
+        Object.keys(tags).slice(0,10).map( (tag,index) => {
+            const newCard = (
+                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
+                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
+                        <p  style={{fontSize:'2vw'}}>{tag}</p>
+                    </div>
+                    <img key={'searchtag' + index} width='60%' height='70%' src={tags[tag]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                </div>
+                
+            )
+            setTagCard(prev => [...prev,newCard])
+        })
+
+        setPresetCard([])
+        Object.keys(presets).slice(0,10).map( (preset,index) => {
+            const newCard = (
+                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
+                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
+                        <p  style={{fontSize:'2vw'}}>{preset}</p>
+                    </div>
+                    <img key={'searchpreset' + index} width='60%' height='70%' src={presets[preset]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                </div>
+                
+            )
+            setPresetCard(prev => [...prev,newCard])
+        })
 
     },[urls])
 
+    useEffect( () => {
+        setUrlCard([])
+        Object.keys(urls).filter( url => urls[url].title.includes(searchText)).map( (url,index) => {
+            const newCard = (
+                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
+                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
+                        <p  style={{fontSize:'2vw'}}>{urls[url].title}</p>
+                    </div>
+                    <img key={'searchurl' + index} width='60%' height='70%' src={urls[url].image} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                </div>
+                
+            )
+            setUrlCard(prev => [...prev,newCard])
+        })
+        setTagCard([])
+        Object.keys(tags).filter( tag => tag.includes(searchText)).map( (tag,index) => {
+            const newCard = (
+                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
+                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
+                        <p  style={{fontSize:'2vw'}}>{tag}</p>
+                    </div>
+                    <img key={'searchtag' + index} width='60%' height='70%' src={tags[tag]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                </div>
+                
+            )
+            setTagCard(prev => [...prev,newCard])
+        })
+        setPresetCard([])
+        Object.keys(presets).filter( preset => preset.includes(searchText)).map( (preset,index) => {
+            const newCard = (
+                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
+                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
+                        <p  style={{fontSize:'2vw'}}>{preset}</p>
+                    </div>
+                    <img key={'searchpreset' + index} width='60%' height='70%' src={presets[preset]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
+                </div>
+                
+            )
+            setPresetCard(prev => [...prev,newCard])
+        })
+
+    },[searchText])
+
 
     return (
-        <div className="w-full h-full " ref={parentRef}>
-
+        <div className="w-full h-full ">
             
             <h1>
                 Search
             </h1>
 
-            <div className="w-full flex justify-center">
-                <div style={{ position: 'relative', left: '10px' }}>
-                    <SearchOutlinedIcon fontSize='medium' sx={{ color: 'white' }} />
-                </div>
-                <div className="relative">
-                    <input type='text' placeholder="Search" className="w-full h-[40px] pl-[40px] bg-transparent border border-white rounded-[30px]" />
-                </div>
+            <div className="w-full flex ">
+                <TextField
+                    InputLabelProps={{ 
+                        style: { color: "#808080" }
+                    }}
+                    InputProps={{
+                        startAdornment: (
+                            <SearchOutlinedIcon sx={{color:'white'}} />
+                        ),
+                    }}
+                    className="w-[80%] text-[1rem] text-white"
+                    sx={{ input: { color: "white" } }}
+                    placeholder="  Search"
+                    focused
+                    size="small"
+                    color="secondary"
+                    onChange={(e) =>{
+                        setSearchText(e.target.value)
+                    }}
+                />
             </div>
 
             <div className='w-full font-semibold text-white text-[2rem] my-[5%] flex justify-left items-center'>
                 URL
             </div>
-            <div id='url' className="w-full h-full   ">
+            <div id='url' className="w-full  flex flex-row flex-wrap justify-between">
                 {UrlCard}
             </div>
+
+            <div className='w-full font-semibold text-white text-[2rem] my-[5%] flex justify-left items-center'>
+                Tag
+            </div>
+            <div id='tag' className="w-full  flex flex-row flex-wrap justify-between">
+                {TagCard}
+            </div>
+
+            <div className='w-full font-semibold text-white text-[2rem] my-[5%] flex justify-left items-center'>
+                Preset
+            </div>
+            <div id='preset' className="w-full  flex flex-row flex-wrap justify-between">
+                {PresetCard}
+            </div>
+
+            <div className="h-[10vh]"></div>
 
         </div>
     )

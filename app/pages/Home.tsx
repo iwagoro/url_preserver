@@ -11,7 +11,9 @@ const Home = () => {
     return (
         <div id="Home" className="w-full h-full pt-[5%]">
 
-                
+                <h1>
+                    Home
+                </h1>
 
                 <img
                     id="Banner"
@@ -46,7 +48,7 @@ const Home = () => {
                 </div>
 
                 
-                <div className="h-[10%]"></div>
+            <div className="h-[10vh]"></div>
 
         </div>
     )

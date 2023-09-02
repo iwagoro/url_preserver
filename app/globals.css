@@ -17,7 +17,7 @@ html{
         font-size: 1rem;
         font-weight: 500;
         color: white;
-        white-space: pre-wrap;
+        white-space: nowrap;
     }
 
     h1 {
@@ -41,4 +41,21 @@ html{
         align-items: center;
         white-space: pre-wrap;
     }
+
+    .flowText:hover p{
+        animation-name: flowText;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    @keyframes flowText {
+        from{
+            transform: translateX(0%);
+        }
+        to{
+            transform: translateX(-100%);
+        }
+    }
+
 }
