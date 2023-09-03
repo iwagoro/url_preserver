@@ -3,16 +3,14 @@ import { debounce, set } from 'lodash'
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link as MuiLink ,TextField} from "@mui/material";
 import { UserData } from "@/consts/provider/UserDataProvider";
-import { filterLists, sortLists } from "@/features/ListUtil";
-import { useForm } from "react-hook-form";
-import UrlCard from "@/ui/UrlCard";
-import { BorderRight } from "@mui/icons-material";
+import { SelectedData } from "@/consts/provider/SelectedData";
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 const Search = () => {  
 
     const {urls,tags,presets} = useContext(UserData)
+    const {selectedList,setSelectedList,setPage} = useContext(SelectedData)
     const [UrlCard,setUrlCard] = useState<JSX.Element[]>([])
     const [TagCard,setTagCard] = useState<JSX.Element[]>([])
     const [PresetCard,setPresetCard] = useState<JSX.Element[]>([])
@@ -23,9 +21,9 @@ const Search = () => {
         Object.keys(urls).slice(0,10).map( (url,index) => {
             const newCard = (
                 <MuiLink 
-                    key={'SearchURLCard' + 'url'} 
+                    key={'SearchURLCard' + url} 
                     target='_blank' 
-                    href={url} 
+                    href={urls[url].url} 
                     sx={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${urls[url].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
                 >
@@ -40,17 +38,18 @@ const Search = () => {
         setTagCard([])
         Object.keys(tags).slice(0,10).map( (tag,index) => {
             const newCard = (
-                <MuiLink 
-                    key={'SearchTagCard' + 'tag'} 
-                    target='_blank' 
-                    href={tag} 
-                    sx={{
-                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${tags[tag].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                <div 
+                    key={'SearchTagCard' + tag} 
+                    style={{width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${tags[tag].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                    onClick={() => {
+                        setSelectedList({ name: tag, type:  true  })
+                        setPage(4)
+                    }}
                 >
                     <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{tags[tag].name}</p>
                     </div>
-                </MuiLink>
+                </div>
             )
             setTagCard(prev => [...prev,newCard])
         })
@@ -58,17 +57,19 @@ const Search = () => {
         setPresetCard([])
         Object.keys(presets).slice(0,10).map( (preset,index) => {
             const newCard = (
-                <MuiLink 
-                    key={'SearchPresetCard' + 'preset'} 
-                    target='_blank' 
-                    href={preset} 
-                    sx={{
+                <div 
+                    key={'SearchPresetCard' + preset} 
+                    style={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${presets[preset].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                    onClick={() => {
+                        setSelectedList({ name: preset, type:false })
+                        setPage(4)
+                    }}
                 >
                     <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{presets[preset].name}</p>
                     </div>
-                </MuiLink>
+                </div>
             )
             setPresetCard(prev => [...prev,newCard])
         })
@@ -80,9 +81,9 @@ const Search = () => {
         Object.keys(urls).filter(url => urls[url].title.includes(searchText)).map((url, index) => {
             const newCard = (
                 <MuiLink 
-                    key={'SearchURLCard' + 'url'} 
+                    key={'SearchURLCard' + url} 
                     target='_blank' 
-                    href={url} 
+                    href={urls[url].url} 
                     sx={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${urls[url].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
                 >
@@ -97,17 +98,18 @@ const Search = () => {
         setTagCard([])
         Object.keys(tags).filter(tag => tags[tag].name.includes(searchText)).map((tag, index) => {
             const newCard = (
-                <MuiLink 
-                    key={'SearchTagCard' + 'tag'} 
-                    target='_blank' 
-                    href={tag} 
-                    sx={{
-                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${tags[tag].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                <div
+                    key={'SearchTagCard' + tag}
+                    style={{ width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${tags[tag].image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                    onClick={() => {
+                        setSelectedList({ name: tag, type: true })
+                        setPage(4)
+                    }}
                 >
-                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(60%) blur(2px)', overflow: 'hidden' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{tags[tag].name}</p>
                     </div>
-                </MuiLink>
+                </div>
             )
             setTagCard(prev => [...prev,newCard])
         })
@@ -115,17 +117,20 @@ const Search = () => {
         setPresetCard([])
         Object.keys(presets).filter(preset => presets[preset].name.includes(searchText)).map((preset, index) => {
             const newCard = (
-                <MuiLink 
-                    key={'SearchPresetCard' + 'preset'} 
-                    target='_blank' 
-                    href={preset} 
-                    sx={{
-                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${presets[preset].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                <div
+                    key={'SearchPresetCard' + preset}
+                    style={{
+                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${presets[preset].image})`, backgroundSize: 'cover', backgroundPosition: 'center'
+                    }}
+                    onClick={() => {
+                        setSelectedList({ name: preset, type: false })
+                        setPage(4)
+                    }}
                 >
-                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(60%) blur(2px)', overflow: 'hidden' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{presets[preset].name}</p>
                     </div>
-                </MuiLink>
+                </div>
             )
             setPresetCard(prev => [...prev,newCard])
         })
