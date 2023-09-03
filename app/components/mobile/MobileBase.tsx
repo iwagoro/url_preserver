@@ -47,7 +47,7 @@ const MobileBase= () => {
                         page === 1 && <Home />
                     }
                     {
-                       // page === 2 && <Search />
+                        page === 2 && <Search />
                     }
                     {
                        page === 3 && <LibraryForMobile />

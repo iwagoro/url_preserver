@@ -11,7 +11,7 @@ const Home = () => {
 
 
     return (
-        <div id="Home" className="w-full h-full pt-[5%]">
+        <div id="Home" className="w-full h-full pb-[5%]">
 
             <h1 className="py-[5%]">Home</h1>
 

@@ -41,12 +41,15 @@ html{
         align-items: center;
         white-space: pre-wrap;
     }
-
+    
     .flowText:hover p{
         animation-name: flowText;
         animation-duration: 5s;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
+    }
+    .SearchCard{
+        backdrop-filter: brightness(50%);
     }
 
     @keyframes flowText {

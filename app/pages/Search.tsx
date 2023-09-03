@@ -3,7 +3,7 @@ import { debounce, set } from 'lodash'
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link as MuiLink ,TextField} from "@mui/material";
 import { UserData } from "@/consts/provider/UserDataProvider";
-import { filterLists, sortLists, addList } from "@/features/ListUtil";
+import { filterLists, sortLists } from "@/features/ListUtil";
 import { useForm } from "react-hook-form";
 import UrlCard from "@/ui/UrlCard";
 import { BorderRight } from "@mui/icons-material";
@@ -17,19 +17,22 @@ const Search = () => {
     const [TagCard,setTagCard] = useState<JSX.Element[]>([])
     const [PresetCard,setPresetCard] = useState<JSX.Element[]>([])
     const [searchText,setSearchText] = useState<string>("")
-
-
+    
     useEffect( () => {
         setUrlCard([])
         Object.keys(urls).slice(0,10).map( (url,index) => {
             const newCard = (
-                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
-                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
-                        <p  style={{fontSize:'2vw'}}>{urls[url].title}</p>
+                <MuiLink 
+                    key={'SearchURLCard' + 'url'} 
+                    target='_blank' 
+                    href={url} 
+                    sx={{
+                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${urls[url].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                >
+                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                        <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{urls[url].title}</p>
                     </div>
-                    <img key={'searchurl' + index}  src={urls[url].image} style={{ margin: '5%', objectFit: 'cover', borderRadius: '10px' }}></img>
-                </div>
-                
+                </MuiLink>
             )
             setUrlCard(prev => [...prev,newCard])
         })
@@ -37,13 +40,17 @@ const Search = () => {
         setTagCard([])
         Object.keys(tags).slice(0,10).map( (tag,index) => {
             const newCard = (
-                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
-                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
-                        <p  style={{fontSize:'2vw'}}>{tag}</p>
+                <MuiLink 
+                    key={'SearchTagCard' + 'tag'} 
+                    target='_blank' 
+                    href={tag} 
+                    sx={{
+                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${tags[tag].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                >
+                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                        <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{tags[tag].name}</p>
                     </div>
-                    <img key={'searchtag' + index}  src={tags[tag]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
-                </div>
-                
+                </MuiLink>
             )
             setTagCard(prev => [...prev,newCard])
         })
@@ -51,67 +58,84 @@ const Search = () => {
         setPresetCard([])
         Object.keys(presets).slice(0,10).map( (preset,index) => {
             const newCard = (
-                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
-                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
-                        <p  style={{fontSize:'2vw'}}>{preset}</p>
+                <MuiLink 
+                    key={'SearchPresetCard' + 'preset'} 
+                    target='_blank' 
+                    href={preset} 
+                    sx={{
+                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${presets[preset].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                >
+                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                        <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{presets[preset].name}</p>
                     </div>
-                    <img key={'searchpreset' + index} src={presets[preset]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
-                </div>
-                
+                </MuiLink>
             )
             setPresetCard(prev => [...prev,newCard])
         })
 
-    },[urls])
+    },[urls,tags,presets])
 
     useEffect( () => {
         setUrlCard([])
-        Object.keys(urls).filter( url => urls[url].title.includes(searchText)).map( (url,index) => {
+        Object.keys(urls).filter(url => urls[url].title.includes(searchText)).map((url, index) => {
             const newCard = (
-                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
-                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
-                        <p  style={{fontSize:'2vw'}}>{urls[url].title}</p>
+                <MuiLink 
+                    key={'SearchURLCard' + 'url'} 
+                    target='_blank' 
+                    href={url} 
+                    sx={{
+                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${urls[url].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                >
+                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                        <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{urls[url].title}</p>
                     </div>
-                    <img key={'searchurl' + index}  src={urls[url].image} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
-                </div>
-                
+                </MuiLink>
             )
             setUrlCard(prev => [...prev,newCard])
         })
+
         setTagCard([])
-        Object.keys(tags).filter( tag => tag.includes(searchText)).map( (tag,index) => {
+        Object.keys(tags).filter(tag => tags[tag].name.includes(searchText)).map((tag, index) => {
             const newCard = (
-                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
-                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
-                        <p  style={{fontSize:'2vw'}}>{tag}</p>
+                <MuiLink 
+                    key={'SearchTagCard' + 'tag'} 
+                    target='_blank' 
+                    href={tag} 
+                    sx={{
+                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${tags[tag].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                >
+                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                        <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{tags[tag].name}</p>
                     </div>
-                    <img key={'searchtag' + index}  src={tags[tag]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
-                </div>
-                
+                </MuiLink>
             )
             setTagCard(prev => [...prev,newCard])
         })
+
         setPresetCard([])
-        Object.keys(presets).filter( preset => preset.includes(searchText)).map( (preset,index) => {
+        Object.keys(presets).filter(preset => presets[preset].name.includes(searchText)).map((preset, index) => {
             const newCard = (
-                <div key={'SearchCard'+index} className="flowText w-[47%] h-[15vh] mb-[5%] bg-[#202020] rounded-[10px] flex items-center justify-between"  >
-                    <div className="w-[30%] flex justify-left overflow-hidden px-[5%]">
-                        <p  style={{fontSize:'2vw'}}>{preset}</p>
+                <MuiLink 
+                    key={'SearchPresetCard' + 'preset'} 
+                    target='_blank' 
+                    href={preset} 
+                    sx={{
+                        width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${presets[preset].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
+                >
+                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                        <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{presets[preset].name}</p>
                     </div>
-                    <img key={'searchpreset' + index}  src={presets[preset]} style={{ margin: '5%', width: '60%', height: '70%', objectFit: 'cover', borderRadius: '10px' }}></img>
-                </div>
-                
+                </MuiLink>
             )
             setPresetCard(prev => [...prev,newCard])
         })
 
     },[searchText])
 
-
     return (
-        <div className="w-full h-full ">
+        <div className="w-full h-full pt-[5%]">
             
-            <h1>
+            <h1 className="pb-[5%]">
                 Search
             </h1>
 
