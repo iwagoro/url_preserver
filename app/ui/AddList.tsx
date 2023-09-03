@@ -4,16 +4,11 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useForm } from "react-hook-form";
 import createThumbnail from '@/lib/LinkedPreview'
 
-import { UserData } from '@/consts/provider/UserDataProvider';
-import { add, set } from 'lodash';
-
-import { addUrltoDB ,AddTagtoDB, AddPresettoDB} from "@/features/DataBaseCRUD"
+import {AddTagtoDB, AddPresettoDB} from "@/features/DataBaseCRUD"
 
 
 const AddList = () => {
 
-    const { originTags, originPresets } = useContext(UserData)
-    const [selectedTags, setSelectedTags] = useState<string[]>([])
     const [toggle, setToggle] = useState<boolean>(false)
     const { register, setValue, getValues } = useForm();
 
@@ -31,7 +26,7 @@ const AddList = () => {
         <div className=" w-full bg-[#202020] flex justify-center h-[100px]  rounded-[10px] ">
             
             <div className="w-[90%] h-full  flex justify-between items-center ">
-                    <h3 className=' w-[30%] hover:text-[magenta]' onClick={() => { setToggle(prev => prev = !prev) }}>
+                    <h3 className='cursor-pointer w-[30%] hover:text-[magenta]' onClick={() => { setToggle(prev => prev = !prev) }}>
                         {toggle ? 'Add Your Tag' : 'Add Your Preset'}
                     </h3>
 

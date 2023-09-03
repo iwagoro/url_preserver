@@ -1,83 +1,84 @@
 "use client"
 import styled from "@emotion/styled";
-import {Card} from '@mui/material'
-import React,{useEffect, useState,useRef,ReactElement,} from "react";
+import { Card } from '@mui/material'
+import React, { useEffect, useState, useRef, ReactElement, } from "react";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const ResizableSidebarContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string }}>`
+const DSidebarContainer = styled(Card) <{ color?: string, customstyle?: { [key: string]: string } }>`
     width: calc(100% - 10px); 
     background-color: ${(props) => props.color ? props.color : 'black'};
     margin: 10px 0 0px 10px;
-    ${(props) => props.customStyle};
+    ${(props) => props.customstyle};
 `;
 
-const ResizableSidebarContainer2 = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
+const DSidebarContainer2 = styled(Card) <{ color?: string, customstyle?: { [key: string]: string } }>`
     width: calc(100% - 10px); 
     height: calc(100% - 20px);
     background-color: ${(props) => props.color ? props.color : 'black'};
     margin: 10px 0 10px 10px;
-    ${(props) => props.customStyle};
+    ${(props) => props.customstyle};
 `;
 
 
-const ResizableWallContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
+const DWallContainer = styled(Card) <{ color?: string, customstyle?: { [key: string]: string } }>`
     height: 100%;
     background-color: ${(props) => props.color};
     width:10px;
-    ${(props) => props.customStyle};
+    ${(props) => props.customstyle};
 `;
 
-const ResizableMainContainer = styled(Card) <{ color?: string, customStyle?: { [key: string]: string } }>`
+const DMainContainer = styled(Card) <{ color?: string, customstyle?: { [key: string]: string } }>`
     overflow: scroll;
     width: calc(100%-10px);
     height: calc(100% - 20px);
     background-image: ${(props) => props.color ? props.color : 'linear-gradient(90deg, #000000, #000000)'};
     margin: 10px 10px 10px 0px;
-    ${(props) => props.customStyle};
+    display: flex;
+    justify-content: center;
+    ${(props) => props.customstyle};
 `;
 
-const RSidebar2 = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
+const DSidebar2 = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
     return (
-        <ResizableSidebarContainer2 color={color} customStyle={sx} >
+        <DSidebarContainer2 color={color} customstyle={sx} >
             {children}
-        </ResizableSidebarContainer2>
+        </DSidebarContainer2>
     )
 }
 
 
-const RSidebar = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string }}) => {
-    return(
-        <ResizableSidebarContainer color={color} customStyle={sx} >
+const DSidebar = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
+    return (
+        <DSidebarContainer color={color} customstyle={sx} >
             {children}
-        </ResizableSidebarContainer>
+        </DSidebarContainer>
     )
 };
 
-const RWall = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
+const DWall = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
     return (
-        <ResizableWallContainer color={color} customStyle={sx}>
+        <DWallContainer color={color} customstyle={sx}>
             {children}
-        </ResizableWallContainer>
+        </DWallContainer>
     )
 };
 
-const RMain = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
+const DMain = ({ children, color, sx }: { children?: React.ReactNode, color?: string, sx?: { [key: string]: string } }) => {
     return (
-        <ResizableMainContainer color={color} customStyle={sx}>
+        <DMainContainer color={color} customstyle={sx}>
             {children}
-        </ResizableMainContainer>
+        </DMainContainer>
     )
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?: Array<ReactElement>, sidebarMinSize: number, sidebarMaxSize: number, color?: string }) => {
+const DGrid = ({ children, sidebarMinSize, sidebarMaxSize, color }: { children?: Array<ReactElement>, sidebarMinSize: number, sidebarMaxSize: number, color?: string }) => {
 
     const parentWidth = useRef<HTMLDivElement>(null!);
     const [ResizableWidth, setResizableWidth] = useState(0);
-    
-    
+
     useEffect(() => {
         const resizeObserver = new ResizeObserver(entries => {
             setResizableWidth((parentWidth.current.clientWidth / 10) * sidebarMinSize);
@@ -92,9 +93,9 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
         };
     }, []);
 
-    const handleMouseDown = (event:{pageX:number}) => {
+    const handleMouseDown = (event: { pageX: number }) => {
         const startX = event.pageX;
-        const handleMouseMove = (event:{pageX:number}) => {
+        const handleMouseMove = (event: { pageX: number }) => {
             const width = ResizableWidth + (event.pageX - startX);
             const maxWidth = (sidebarMaxSize / 10) * parentWidth.current.clientWidth;
             const constrainedWidth = Math.min(Math.max(width, (sidebarMinSize / 10) * parentWidth.current.clientWidth), maxWidth);
@@ -110,12 +111,9 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
         document.addEventListener("mouseup", handleMouseUp);
     };
 
-    
-    
-
-    const handleTouchDown = (event:any) => {
+    const handleTouchDown = (event: any) => {
         const startX = event.touches[0].pageX;
-        const handleTouchMove = (event:any) => {
+        const handleTouchMove = (event: any) => {
             const width = ResizableWidth + (event.touches[0].pageX - startX);
             const maxWidth = (sidebarMaxSize / 10) * parentWidth.current.clientWidth;
             const constrainedWidth = Math.min(Math.max(width, (sidebarMinSize / 10) * parentWidth.current.clientWidth), maxWidth);
@@ -137,20 +135,20 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
                 id="sidebar"
                 style={{
                     width: ResizableWidth + "px",
-                    height:'100%',
+                    height: '100%',
                     overflow: "scroll",
                     display: "flex",
                     flexDirection: "column",
                 }}
             >
                 {children && children[0]}
-                <div style={{flexGrow:1}}>
+                <div style={{ flexGrow: 1 }}>
                     {children && children[1]}
                 </div>
             </div>
             <div id="wall" style={{ cursor: "ew-resize" }} onMouseDown={handleMouseDown} onTouchStart={handleTouchDown}>
                 {children && children[2]}
-             </div>
+            </div>
             <div
                 id="main"
                 style={{
@@ -159,9 +157,9 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
                     minWidth: `calc(100% - ${ResizableWidth}px)`,
                 }}
             >
-                
+
                 {children && children[3]}
-                
+
             </div>
         </div>
 
@@ -171,4 +169,4 @@ const RGrid = ({ children , sidebarMinSize, sidebarMaxSize, color}: { children?:
 
 }
 
-export {RGrid, RMain, RSidebar, RWall ,RSidebar2}
+export { DGrid, DMain, DSidebar, DWall, DSidebar2 }

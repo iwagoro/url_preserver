@@ -2,6 +2,7 @@
 import React,{useState,useEffect,useContext} from 'react';
 import {db} from '../lib/FireBase';
 import { collection, onSnapshot, doc, getDoc,setDoc,deleteDoc,updateDoc } from "@firebase/firestore";
+import extractDomain from '@/features/extractDomain';
 
 
 interface sendingData {
@@ -15,18 +16,6 @@ interface sendingData {
 }
 
 const addUrltoDB = async (object:sendingData) => {
-
-    const extractDomain = (url: string) => {
-        const domainRegex = /^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/.*)?$/;
-        const matches = url.match(domainRegex);
-
-        if (matches) {
-            const [, , domain, topLevelDomain] = matches;
-            return `${domain}.${topLevelDomain}`;
-        } else {
-            return url;
-        }
-    }
 
     const sendingObject = { ...object, date: (new Date()).toLocaleDateString()}
 

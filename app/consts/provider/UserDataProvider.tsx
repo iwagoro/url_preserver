@@ -6,82 +6,97 @@ import { collection, onSnapshot, doc, getDoc } from "@firebase/firestore";
 export const UserData = createContext({} as {
     userName:string,
     setUserName:React.Dispatch<React.SetStateAction<string>>,
-    tags:Record<string,string>,
-    setTags:React.Dispatch<React.SetStateAction<Record<string,string>>>,
-    originTags:Record<string,boolean>,
-    setOriginTags:React.Dispatch<React.SetStateAction<Record<string,boolean>>>,
-    presets:Record<string,string>,
-    setPresets:React.Dispatch<React.SetStateAction<Record<string,string>>>,
-    originPresets:Record<string,boolean>,
-    setOriginPresets:React.Dispatch<React.SetStateAction<Record<string,boolean>>>,
-    urls:Record<string,Record<string,any>>
-    setUrls:React.Dispatch<React.SetStateAction<Record<string,Record<string,any>>>>
+    userIcon:string,
+    setUserIcon:React.Dispatch<React.SetStateAction<string>>,
+    tags:Record<string,tagObject>,
+    setTags:React.Dispatch<React.SetStateAction<Record<string,tagObject>>>,
+    presets:Record<string,presetObject>,
+    setPresets:React.Dispatch<React.SetStateAction<Record<string,presetObject>>>,
+    urls:Record<string,urlObject>
+    setUrls:React.Dispatch<React.SetStateAction<Record<string,urlObject>>>
 })
+
+
+interface urlObject{
+    date:string,
+    description:string,
+    image:string,
+    tags:string[],
+    presets:string[],
+    title:string,
+    url:string
+}
+
+interface tagObject{
+    image:string,
+    name:string,
+    type:string
+}
+
+interface presetObject{
+    image:string,
+    name:string,
+    type:string
+}
 
 const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [userName,setUserName] = useState<string>('test@gmail.com')
-    const [tags,setTags] = useState<Record<string,string>>({})
-    const [originTags,setOriginTags] = useState<Record<string,boolean>>({})
-    const [presets,setPresets] = useState<Record<string,string>>({})
-    const [originPresets,setOriginPresets] = useState<Record<string,boolean>>({})
-    const [urls,setUrls] = useState<Record<string,Record<string,any>>>({})
+    const userIconImage = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh6ErsCMbdaxWNDI5KnQe3hwVRLXrRWmqzmMtPQLTAVclBn5PCkCGuBXGmFNovC7I1pFCVYb6PhLs0LK85zUA0JeUJB_jad416aRl7E0snf9pACrT3GNVRwQrb0uDbWt9sCV_nsxIpl33eCi8dlSpgsIUJXgS_Ho7y3vgAam2apeqV1C0KV2F1XzdVv2v52/s400/kodai_sacabambaspis.png"
 
+    const [userName,setUserName] = useState<string>('test@gmail.com')               //ユーザー名
+    const [userIcon,setUserIcon] = useState<string>(userIconImage)                             //ユーザーアイコン
+    const [tags,setTags] = useState<Record<string,tagObject>>({})                      //タグオブジェクト（image,name,type）
+    const [presets,setPresets] = useState<Record<string,presetObject>>({})                //プリセットオブジェクト（image,name,type）
+    const [urls,setUrls] = useState<Record<string,urlObject>>({})                   //URLオブジェクト（date,description,image,tags,tittle,url）
+
+
+    //URLオブジェクトの取得
     useEffect(() => {
         const collectionRef = collection(db, 'User', userName, 'Urls')
-        const subscribe = onSnapshot(collectionRef, (snapshot) => {
-            snapshot.forEach(doc => {
-                setUrls((prev) => {
-                    return {...prev,[doc.id]:doc.data()}
-                })
+        const subscribe = onSnapshot(collectionRef, (snapshot) => 
+            snapshot.docChanges().forEach(doc => {
+                if(doc.type === "added"){
+                    setUrls( prev => {
+                        return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,urlObject>
+                    })
+                }
             })
-        })
+        )
     },[])
 
+
+    //タグ&プリセットオブジェクトの取得
     useEffect(() => {
         const collectionRef = collection(db, 'User', userName, 'Tags')
         const subscribe = onSnapshot(collectionRef, (snapshot) => {
             snapshot.docChanges().forEach(doc => {
                 if(doc.type === 'added'){
-                    if (doc.doc.data().type === 'tag') {
-                        setTags((prev) => {
-                            return { ...prev, [doc.doc.id]: doc.doc.data().image }
-                        })
-                        setOriginTags((prev) => {
-                            return { ...prev, [doc.doc.id]: false }
-                        })
-                    } else {
-                        setPresets((prev) => {
-                            return { ...prev, [doc.doc.id]: doc.doc.data().image }
-                        })
-                        setOriginPresets((prev) => {
-                            return { ...prev, [doc.doc.id]: false }
+                    if(doc.doc.data().type === 'tag'){
+                        setTags( prev => {
+                            return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,tagObject>
                         })
                     }
-                }else if(doc.type === 'removed'){
+                    else if(doc.doc.data().type === 'preset'){
+                        setPresets( prev => {
+                            return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,presetObject>
+                        })
+                    }
+                }
+                else if(doc.type === 'removed'){
                     const removedTag = doc.doc.id
-                    if (doc.doc.data().type === 'tag') {
+                    if(doc.doc.data().type === 'tag'){
                         setTags( prev => {
                             const newTags = {...prev}
                             delete newTags[removedTag]
                             return newTags
                         } )
-                        setOriginTags((prev) => {
-                            const newTags = {...prev}
-                            delete newTags[removedTag]
-                            return newTags
-                        })
-                    } else {
-                        setPresets((prev) => {
+                    }
+                    else if(doc.doc.data().type === 'preset'){
+                        setPresets( prev => {
                             const newPresets = {...prev}
                             delete newPresets[removedTag]
                             return newPresets
-                        })
-                        setOriginPresets((prev) => {
-                            const newPresets = { ...prev }
-                            delete newPresets[removedTag]
-                            return newPresets
-                        })
+                        } )
                     }
                 }
             })
@@ -90,7 +105,7 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
 
 
     return (
-        <UserData.Provider value={{userName,setUserName,tags,setTags,originTags,setOriginTags,presets,setPresets,originPresets,setOriginPresets,urls,setUrls}}>
+        <UserData.Provider value={{userName,setUserName,userIcon,setUserIcon,tags,setTags,presets,setPresets,urls,setUrls}}>
             {children}
         </UserData.Provider>
     )

@@ -4,6 +4,8 @@ import { useState, useEffect, useRef ,useContext} from "react";
 import { Link as MuiLink } from "@mui/material";
 import { UserData } from "@/consts/provider/UserDataProvider";
 
+import extractDomain from "@/features/extractDomain";
+
 
 const UrlCard = ( ) => {
 
@@ -14,20 +16,8 @@ const UrlCard = ( ) => {
     const [cardAmount,setCardAmount] = useState<number>(3)
     const [card,setCard] = useState<Array<JSX.Element>>([])
 
-    const extractDomain = (url: string) => {
-        const domainRegex = /^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/.*)?$/;
-        const matches = url.match(domainRegex);
-
-        if (matches) {
-            const [, , domain, topLevelDomain] = matches;
-            return `${domain}.${topLevelDomain}`;
-        } else {
-            return url;
-        }
-    }
-
     const makeCards = () => {
-        setCard([])
+
         const cardWidth = (targetWidth / cardAmount) * 0.9
         let count = 0;
 
@@ -39,37 +29,31 @@ const UrlCard = ( ) => {
 
             const newCard = (
                 <MuiLink key={item} target='_blank' href={url} style={{ width: `${cardWidth}px` }} className={`rounded-[10px] flex bg-[#202020] items-center flex-col rounded hover:bg-[#242424] no-underline break-words overflow-hidden`}>
-                    {
-                        image !== undefined
-                            ? <img src={image} width={`${cardWidth * 0.8}px`} height={`${cardWidth * 0.8}px`} style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, objectFit:'cover',margin: '10%', borderRadius: '10px'  }} />
-                            : <div style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, backgroundColor: '#454545', margin: '10%', borderRadius:'10px' }} />
-                    }
+                    <img src={image} className="object-cover m-[10%] rounded-[10px]" style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`}}/> 
                     <div className="text-white py-[10%] w-[80%] text-left font-[1rem]">
-                        {title !== undefined ? title.slice(0, 30) : <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] " />}
+                        {title !== undefined ? title.slice(0, 30) : <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] "/>}
                     </div>
                     <div className="text-[#808080] pb-[10%] w-[80%] text-left font-[0.8rem] " >
                         {url !== undefined ? extractDomain(url) : <div className=" bg-[#454545] h-[1rem] w-[80%] rounded-[20px] " />}
                     </div>
                 </MuiLink>
             )
-
             setCard(prev => [...prev,newCard])
-
         })
 
-        for (let i = 0; i < cardAmount - count; i++) {
-            setCard(prev => [...prev,
-                <MuiLink key={"brank"+i} target="_blank" sx={{ width: `${cardWidth}px`, textDecoration: 'none', backgroundColor: '#191919', display: 'flex', alignItems: 'center', flexFlow: 'column', borderRadius: '10px', overflowWrap: 'anywhere', '&:hover': { backgroundColor: '#242424' } }}>
-                 <div style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`, backgroundColor: '#454545', margin: '10%', borderRadius: '10px' }} />
-                
-                <div className="text-white py-[10%] w-[80%] text-left ">
-                    <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] " />
+        if(count < cardAmount){
+            for (let i = 0; i < cardAmount - count; i++) {
+                setCard(prev => [...prev,
+                <div key={'noLinkUrlCard' + i} className="bg-[#191919] flex flex-col items-center rounded-[10px] hover:bg-[#242424]" style={{ width: `${cardWidth}px` }}>
+                    <div className="bg-[#454545] m-[10%] rounded-[10px]" style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px` }} />
+                    <div className="w-[80%] py-[10%]">
+                        <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] " />
+                        <div className="h-[1rem]"></div>
+                        <div className=" bg-[#454545] h-[1rem] w-[80%] rounded-[20px] " />
+                    </div>
                 </div>
-                <div className="text-[#808080] pb-[10%] w-[80%] text-left " >
-                    <div className=" bg-[#454545] h-[1rem] w-[80%] rounded-[20px] " />
-                </div>
-            </MuiLink>
-            ])
+                ])
+            }
         }
     }
 
@@ -94,18 +78,15 @@ const UrlCard = ( ) => {
             debounceObserver(entry)
         } )
 
-        if(parentElement){
-            resizeObserver.observe(parentElement)
-        }
+        parentElement && resizeObserver.observe(parentElement)
 
         return () => {
-            if (parentElement) {
-                resizeObserver.unobserve(parentElement)
-            }
+            parentElement && resizeObserver.unobserve(parentElement)
         }
     })
 
     useEffect( () => {
+        setCard([])
         makeCards()
     },[cardAmount,targetWidth,urls] )
 

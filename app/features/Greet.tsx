@@ -3,7 +3,7 @@ import React ,{useEffect,useState} from "react";
 
 const Greet = () => {
 
-    const [greet, setGreet] = useState<string>('hello')
+    const [greet, setGreet] = useState<string>('Hello')
 
     const createGreet = () => {
         const currentHour = new Date().getHours()
@@ -26,7 +26,7 @@ const Greet = () => {
     }, []);
 
     return (
-            <h1 className="px-[0] py-[5%]" >{greet}</h1>
+            <h1 className="px-[0] pt-[5%]" >{greet}</h1>
     )
 }
 

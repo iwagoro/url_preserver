@@ -18,11 +18,30 @@ const ListButtonContainer = styled(ListItem) <{ color?: string, focus?: Boolean 
     }
 `;
 
+const ListButtonContainerV2 = styled(ListItem) <{ color?: string, focus?: Boolean }>`
+    width:'100%';
+    margin:5px;
+    cursor:pointer;
+    color:${(props) => props.color};
+    display:flex;
+    justify-content:space-between;
+`;
 
-const ListButton = ({ children, color, onClick, label, focus, sx, }: { children?: React.ReactNode, color?: string, onClick?: (arg: any) => any, label?: string, focus?: Boolean, sx?: { [key: string]: string }}) => {
+const ListButtonContainerV3 = styled(ListItem) <{ color?: string, focus?: Boolean }>`
+    width:'100%';
+    margin:5px;
+    cursor:pointer;
+    color:${(props) => props.color};
+    display:flex;
+    justify-content:space-between;
+`;
+
+
+
+const ListButton = ({ children, color, onClick, label, focus, sx,id }: { children?: React.ReactNode, color?: string, onClick?: (arg: any) => any, label?: string, focus?: Boolean, sx?: { [key: string]: string },id?:string}) => {
 
         return (
-            <ListButtonContainer onClick={onClick} color={color} focus={focus}>
+            <ListButtonContainer id={id} onClick={onClick} color={color} focus={focus}>
                 {children}
                 <div className="pl-[1rem] text-[1rem]">{label}</div>
             </ListButtonContainer>
@@ -30,34 +49,45 @@ const ListButton = ({ children, color, onClick, label, focus, sx, }: { children?
     
 }
 
-const TagButton = ({  color, onClick, label,  type = 'tag' ,image,width}: { color?: string, onClick?: (arg: any) => any, label?: string, type?: string ,image?:string,width:string}) => {
+const ListButtonV2 = ({ children, color, onClick, label, focus, sx, id }: { children?: React.ReactNode[], color?: string, onClick?: (arg: any) => any, label?: string, focus?: Boolean, sx?: { [key: string]: string }, id?: string }) => {
 
-        const { urls } = React.useContext(UserData)
-
-        return (
-            <ListItem className="w-full flex justify-between  items-center flex-row p-0 my-[10px]"  >
-
-                <div className="w-[75%] overflow-hidden cursor-pointer flex items-center hover:bg-[#191919]" onClick={() => onClick && onClick(label)}>
-                    <img src={image} width={`${width}px`} height={`${width}px`} style={{ maxWidth: `${width}px`, maxHeight: `${width}px`, minWidth: `${width}px`, minHeight: `${width}px`, objectFit: 'cover', borderRadius: '10px' }} />
-                    <List className="text-left px-[0.8rem] py-[0] whitespace-nowrap" >
-                        <div style={{ fontSize: '1rem', color: color }} >
-                            {label}
-                        </div>
-                        <div style={{ fontSize: '0.8rem', color: 'white', filter: 'brightness(70%)' }}>
-                            {type === 'tag' ? 'Tag' : 'Preset'}
-                        </div>
-                    </List>
+    return (
+            <ListButtonContainerV2 id={id}  color={color} focus={focus}>
+            <div className="flex brightness-[60%] hover:brightness-[100%]" onClick={onClick}>
+                    {children && children[0]}
+                    <div className="pl-[1rem] text-[1rem]">{label}</div>
                 </div>
-                <IconButton className="" disableRipple onClick={()=>label && deleteTag(label,urls)}>
-                    <RemoveIcon sx={{ color: 'gray' }} />
-                </IconButton>
+            <div className="brightness-[60%] hover:brightness-[100%]">
+                    {children && children[1]}
+                </div>
+            </ListButtonContainerV2>
+    )
 
-
-            </ListItem>
-        )
-    
 }
 
-export { ListButton, TagButton }
+const ListButtonV3 = ({ children, color, onClick, label,label2, focus, id }: { children?: React.ReactNode[], color?: string, onClick?: (arg: any) => any, label?:string,label2?:string, focus?: Boolean, sx?: { [key: string]: string }, id?: string }) => {
+
+    return (
+        <ListButtonContainerV3 id={id}  color={color} focus={focus}>
+            <div className="flex  overflow-hidden" onClick={onClick}>
+                {children && children[0]}
+                <div className="pl-[1rem] h-[90%] text-[1rem] flex flex-col justify-between">
+                    <p>{label}</p>
+                    <p className="brightness-[60%]">{label2}</p>
+                </div>
+            </div>
+            <div className="sticky">
+                {children && children[1]}
+            </div>
+        </ListButtonContainerV3>
+    )
+
+}
+
+
+
+
+
+export { ListButton, ListButtonV2 ,ListButtonV3}
 
 //sx={{ cursor: 'pointer', width: '100%', diplay: 'flex', alignItems: 'center', flexDirection: 'row', "&:hover": { backgroundColor: '#191919' } }}

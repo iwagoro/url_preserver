@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Main from "@/components2/base/Main";
-import Sidebar from "@/components2/base/Sidebar";
-import {MobileGrid,MMain,MFooter,MHeader} from "@/components2/base/MobileGrid";
-import { ListButton, TagButton } from "@/ui/Button";
+import { MobileGrid, MMain, MFooter, MHeader } from "@/components/mobile/MobileGrid";
 import LibraryForMobile from "@/pages/LibraryForMobile";
 import Home from "@/pages/Home";
 import Search from "@/pages/Search";
@@ -11,20 +8,15 @@ import { SelectedData } from "@/consts/provider/SelectedData";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import SelectedList from "@/pages/SelectedList";
 import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
-import { IconButton ,Avatar} from "@mui/material";
+import { IconButton, Avatar } from "@mui/material";
 
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import SelectedList from "@/pages/SelectedList";
 
-const ForDesktop = () => {
+const MobileBase= () => {
 
-    const { selectedTags, selectedPresets, setSelectedTags, setSelectedPresets, selectedUrls, selectedType } = React.useContext(SelectedData)
-    const [toggle, setToggle] = useState<number>(1)
-
-    useEffect(() => {
-        
-    }, [selectedTags, selectedPresets])
+    const {page,setPage} = React.useContext(SelectedData)
 
     return (
         <MobileGrid>
@@ -48,32 +40,34 @@ const ForDesktop = () => {
             </MHeader>
             <MMain>
 
-                
-                <Main>
-                    <div className="h-[10vh]"></div>
+
+                <div className="w-[90%] h-full">
+                    <div className="h-[7vh]"></div>
                     {
-                        toggle === 1 && <Home />  
+                        page === 1 && <Home />
                     }
                     {
-                        toggle === 2 && <Search />
+                       // page === 2 && <Search />
                     }
                     {
-                        toggle === 3 && <LibraryForMobile />
+                       page === 3 && <LibraryForMobile />
                     }
-                    
-                </Main>
+                    {
+                        page === 4 && <SelectedList />
+                    }
+                </div>
             </MMain>
             <MFooter >
-                <div className="w-full h-full flex justify-center " style={{ backgroundImage:' linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.96) 50%)'}}>
+                <div className="w-full h-full flex justify-center " style={{ backgroundImage: ' linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.96) 50%)' }}>
                     <div className="w-[80%] h-full flex justify-between items-center ">
-                        <IconButton disableRipple onClick={() => {setToggle(1) }}>
-                            <HomeOutlinedIcon fontSize='medium' sx={{ color: 'white' }} />
+                        <IconButton disableRipple onClick={() => { setPage(1) }}>
+                            <HomeOutlinedIcon fontSize='medium' sx={{ color: page === 1 ? 'white' : '#808080' }} />
                         </IconButton>
-                        <IconButton disableRipple onClick={() => {setToggle(2) }}>
-                            <SearchOutlinedIcon fontSize='medium' sx={{ color: 'white' }} />
+                        <IconButton disableRipple onClick={() => { setPage(2) }}>
+                            <SearchOutlinedIcon fontSize='medium' sx={{ color: page === 2 ? 'white' : '#808080' }} />
                         </IconButton>
-                        <IconButton disableRipple onClick={() => { setToggle(3) }}>
-                            <FilterNoneOutlinedIcon fontSize='medium' sx={{ color: 'white' }} />
+                        <IconButton disableRipple onClick={() => { setPage(3) }}>
+                            <FilterNoneOutlinedIcon fontSize='medium' sx={{ color: page === 3 ? 'white' : '#808080' }} />
                         </IconButton>
                     </div>
                 </div>
@@ -82,4 +76,4 @@ const ForDesktop = () => {
     )
 }
 
-export default ForDesktop
+export default MobileBase

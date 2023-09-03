@@ -10,7 +10,7 @@ const ModalMenu = ({ children, element, onClick }: { children?: React.ReactNode,
 
     return (
         <>
-            <IconButton onClick={(event) => setAnchorEl(event.currentTarget)} disableRipple sx={{ color: "white", filter: "brightness(60%)", "&:hover": { filter: "brightness(100%)" } }}>
+            <IconButton onClick={(event) => setAnchorEl(event.currentTarget)} disableRipple sx={{ color: "white", filter: 'brightness(60%)', '&:hover':{ filter: 'brightness(100%)' }}}>
                 {children}
             </IconButton>
             <Menu open={open} onClose={() => setAnchorEl(null)} anchorEl={anchorEl} sx={{ "& .MuiMenu-paper": { backgroundColor: "#242424" } }}>

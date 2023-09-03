@@ -1,7 +1,8 @@
 "use client"
 import React from 'react'
-import ForDesktop from './components2/base/ForDesktop'
-import ForMobile from './components2/base/ForMobile'
+import ForDesktop from './components/desktop/DesktopBase'
+import ForMobile from './components/mobile/MobileBase'
+import ThemeProvider from '@/consts/provider/ThemeProvider'
 import UserDataProvider from "@/consts/provider/UserDataProvider";
 import SelectedDataProvider from './consts/provider/SelectedData';
 import { useMediaQuery } from '@mui/material';
@@ -17,6 +18,7 @@ const App = () => {
     return (
         <UserDataProvider>
         <SelectedDataProvider>
+        <ThemeProvider>
         <div className={InterNormal.className}>
             {isDesktop
             ?           <div id="ForDeskTop" className="w-screen h-screen bg-black">
@@ -24,13 +26,14 @@ const App = () => {
                         </div>
             :
                         <div id="ForMobile" className="w-screen h-screen bg-black">
-                            <ForMobile />
+                            <ForMobile/>
                         </div>
             }
 
             
 
         </div>
+        </ThemeProvider>
         </SelectedDataProvider>
         </UserDataProvider>
     )

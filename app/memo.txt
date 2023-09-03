@@ -1,26 +1,100 @@
 app
 ├ components
-│ └ base                        //基本的なコンポーネント
+│ └ Mobile                        
 │ 　 ├ Mobile.tsx               //スマホ用レイアウト
-│ 　 └ Desktop.tsx              //デスクトップ用レイアウト
+│ 　 ├ MobileGrid               
+│ └ Desktop 
+│ 　 ├ Desktop.tsx              //デスクトップ用レイアウト
+│ 　 └ DesktopGrid.tsx              //デスクトップ用レイアウト
 ├ consts
 │ └ provider
-│ 　 ├ SelectedDataProvider.tsx //選択した（Tag,Preset,TagかPresetかの値）とuseMediaを提供
-│ 　 └ UserDataProvider.tsx     //(url,tag,presets<Record<string,any>>)と（url,tag,presets<string,boolean>）とユーザー情報(e-mail,icon)を提供
+│ 　 ├ SelectedDataProvider.tsx //選択した（Tag,Preset,TagかPresetかの値）と(tag,preset)を選択したかと
+│ 　 ├ UserDataProvider.tsx     //(url,tag,presets<Record<string,any>>)と（url,tag,presets<string,boolean>）とユーザー情報(e-mail,icon)を提供
+│ 　 └ ThemeProvider            //カラーを提供
 ├ features
-│ ├ DataBaseCRUD.tsx            //
-│ ├ ListCRUD.tsx
-│ ├ UrlCRUD.tsx
-│ ├ UserDataUtil.tsx
-│ └ Greet.tsx
+│ ├ DataBaseCRUD.tsx            //(url,tag,preset)の追加、参照？、変更(名前、tag)、削除機能
+│ ├ ListUtiltsx                 //(tag,preset)のソート
+│ ├ UrlUtil.tsx                 //(url)のソート
+│ └ Greet.tsx                   //挨拶を提供する（<h1>）
 ├ lib
-│ ├ FireBase.tsx
-│ └ LinkPreview.tsx
+│ ├ FireBase.tsx                //firebase SDKの提供
+│ └ LinkPreview.tsx             //createThumbnail(タイトル、説明、画像)を生成
 ├ pages
-│ ├ AddList.tsx
-│ ├ AddUrl.tsx
-│ ├ Button.tsx
-│ ├ ListCard.tsx
-│ ├ ModalMenu.tsx
-│ └ UrlCard.tsx
-└ ui
+│ ├ Home.tsx                    //ホーム
+│ ├ Search.tsx                  //サーチ
+│ ├ Library.tsx                 //ライブラリ
+│ └ selectedList.tsx            //選択したリスト
+├ ui
+│ ├ AddList.tsx                 //(tag,preset)を追加するフォーム
+│ ├ AddUrl.tsx                  //urlを追加するフォーム
+│ ├ Button.tsx                  //
+│ ├ ListCard.tsx                //(tag,preset)のリスト表示
+│ ├ ModalMenu.tsx               //もダルメニュー
+│ └ UrlCard.tsx                 ////(tag,preset)のリスト表示
+└
+``
+
+useEffect(()=>{
+        if(selectedType){
+            setLabel(selectedTags)
+            setSelectedList(tags)
+        }else{
+            setLabel(selectedPresets)
+            setSelectedList(presets)
+        }
+    },[selectedType,selectedPresets,selectedTags])
+
+    useEffect(()=>{
+        setTable([])
+        setUrlAmount(0)
+        Object.keys(urls).filter(url => urls[url].tags.includes(label)).map( (url,index) =>{
+
+                setUrlAmount(prev => prev+1)
+                const newTable = (
+                    <TableRow key={"Table" + url} className="cursor-pointer hover:bg-[#242424]" onClick={() => { ClicktoURL(urls[url].url) }}>
+                        <TableCell className="text-white"  >{index}</TableCell>
+                        <TableCell className="text-white"  >
+                            <img src={urls[url].image} width="40px" height="40px" style={{ maxWidth: "40px", maxHeight: "40px", minWidth: "40px", minHeight: "40px", objectFit: 'cover', borderRadius: '10px' }} />
+                        </TableCell>
+                        <TableCell className="text-white">{urls[url].title}</TableCell>
+                        <TableCell className="text-white">{urls[url].date}</TableCell>
+                    </TableRow>
+                )
+                setTable(prev => [...prev, newTable])
+            
+
+        } )
+    },[urls,label])
+
+
+    <div id="SelectedList" className="w-full h-full">
+            <div id="Header" className="w-full  flex items-center">
+                <img
+                    id="Banner"
+                    src={''}
+                    className="w-[200px] h-[200px] rounded-[10px]"
+                />
+                <div className="h-[200px] pl-[5%] flex flex-col justify-between">
+                    <div id="Type" className="font-bold text-[1rem] text-white ">{selectedType ? "Tag" : "Preset"}</div>
+                    <div id="Title" className="font-[1000] text-[4rem] text-white ">{label}</div>
+                    <div id="amount" className="font-bold text-[0.8rem] text-white">{urlAmount} urls</div>
+                </div>
+            </div>
+            <div id="Content" className="my-[5%]">
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow >
+                                <TableCell className="text-white w-[5%]  ">#</TableCell>
+                                <TableCell className="text-white w-[5%]  ">icon</TableCell>
+                                <TableCell className="text-white w-[70%] ">title</TableCell>
+                                <TableCell className="text-white w-[20%] ">date</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {table}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+        </div>
