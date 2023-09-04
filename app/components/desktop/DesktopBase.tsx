@@ -9,15 +9,16 @@ import { SelectedData } from "@/consts/provider/SelectedData";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
+import TagPopUp from "@/pages/TagPopUp";
+import UrlPopUp from "@/pages/UrlPopUp";
 
 const ForMobile = () => {
 
-    const { selectedList ,setSelectedList,selectedType, page, setPage } = React.useContext(SelectedData)
-
+    const {selectedUrls, selectedList ,setSelectedList,selectedType, page, setPage ,setIsPopUpOpen,isPopUpOpen} = React.useContext(SelectedData)
 
     return (
-        <DGrid sidebarMaxSize={5} sidebarMinSize={2.5}>
+        <>
+            <DGrid sidebarMaxSize={5} sidebarMinSize={2.5}>
 
             <DSidebar color='#121212'>
                 <div className="w-[90%] h-full">
@@ -50,7 +51,12 @@ const ForMobile = () => {
                 </div>
             </DMain>
 
-        </DGrid>
+            </DGrid>
+            <TagPopUp isOpen={isPopUpOpen && selectedList.name !== '' && selectedUrls.title === ''} onClose={() => { setIsPopUpOpen(false) }} /> 
+            <UrlPopUp isOpen={isPopUpOpen && selectedList.name === '' && selectedUrls.title !== ''} onClose={() => { setIsPopUpOpen(false) }} />
+        </>
+
+        
     )
 }
 

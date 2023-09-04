@@ -46,6 +46,34 @@ const AddPresettoDB = async (preset:string) => {
     })
 }
 
+const updateTag = async (name:string,image:string) => {
+    const ref= doc(db, "User", 'test@gmail.com', 'Tags', name)
+    await updateDoc(ref,{
+        name:name,
+        image:image,
+    })
+}
+
+const updatePreset = async (name:string,image:string) => {
+    const ref= doc(db, "User", 'test@gmail.com', 'Tags', name)
+    await updateDoc(ref,{
+        name:name,
+        image:image,
+    })  
+
+}
+
+
+const updateUrl= async (title:string,image:string,description:string,tags:Array<string>,presets:Array<string>,url:string) =>{
+    const ref= doc(db, "User", 'test@gmail.com', 'Urls', extractDomain(url))
+    await updateDoc(ref,{
+        title:title,
+        image:image,
+        description:description,
+        tags:tags,
+        presets:presets,
+    })
+}
 const deleteTag = async (tag: string, urls: Record<string, Record<string, any>>) => {
     
     Object.keys(urls).filter( url => urls[url].tags.includes(tag)).map( async url => {
@@ -59,4 +87,4 @@ const deleteTag = async (tag: string, urls: Record<string, Record<string, any>>)
     const ref = doc(db, "User", 'test@gmail.com', 'Tags', tag)
     await deleteDoc(ref)
 }
-export {addUrltoDB,AddTagtoDB,AddPresettoDB,deleteTag}
+export {addUrltoDB,AddTagtoDB,AddPresettoDB,deleteTag,updateTag,updatePreset,updateUrl}

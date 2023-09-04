@@ -7,6 +7,7 @@ import ListCard from "@/ui/ListCard";
 import AddUrl from "@/ui/AddUrl";
 import AddList from "@/ui/AddList";
 
+
 const Home = () => {
 
 
@@ -47,6 +48,8 @@ const Home = () => {
                 <div id="AddList" className="w-full my-[5%]">
                     <AddList />
                 </div>
+
+                
 
             <div className="h-[10vh]"></div>
 

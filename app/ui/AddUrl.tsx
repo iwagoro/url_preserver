@@ -2,7 +2,7 @@ import React,{useState,useEffect,useContext} from 'react'
 import {TextField ,IconButton,Chip} from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useForm } from "react-hook-form";
-import createThumbnail from '@/lib/LinkedPreview'
+import createThumbnail from '@/lib/LinkPreview'
 
 import { UserData } from '@/consts/provider/UserDataProvider';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
@@ -39,8 +39,7 @@ const AddUrl = () => {
     
 
     const submitURL = async () => {
-        setSelectedPresets([])
-        setSelectedTags([])
+        
         const urlValue = getValues("url_value");
         if (urlValue !== "") {
             let sendingData = await createThumbnail(urlValue);
@@ -48,6 +47,8 @@ const AddUrl = () => {
             await addUrltoDB(sendingData);
             setValue("url_value", "");
         }
+        setSelectedPresets([])
+        setSelectedTags([])
     }
 
     const chipOnClick = (item:string) => {

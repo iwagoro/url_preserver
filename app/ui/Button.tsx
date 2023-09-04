@@ -65,11 +65,11 @@ const ListButtonV2 = ({ children, color, onClick, label, focus, sx, id }: { chil
 
 }
 
-const ListButtonV3 = ({ children, color, onClick, label,label2, focus, id }: { children?: React.ReactNode[], color?: string, onClick?: (arg: any) => any, label?:string,label2?:string, focus?: Boolean, sx?: { [key: string]: string }, id?: string }) => {
+const ListButtonV3 = ({ children, color, onClick, onContextMenu, label, label2, focus, id }: { children?: React.ReactNode[], color?: string, onClick?: (arg: any) => any, onContextMenu?: (arg: any) => any,label?:string,label2?:string, focus?: Boolean, sx?: { [key: string]: string }, id?: string }) => {
 
     return (
         <ListButtonContainerV3 id={id}  color={color} focus={focus}>
-            <div className="flex  overflow-hidden" onClick={onClick}>
+            <div className="flex  overflow-hidden" onClick={onClick} onContextMenu={onContextMenu}>
                 {children && children[0]}
                 <div className="pl-[1rem] h-[90%] text-[1rem] flex flex-col justify-between">
                     <p>{label}</p>

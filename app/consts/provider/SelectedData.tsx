@@ -8,10 +8,12 @@ export const SelectedData = createContext({} as {
     setPage: React.Dispatch<React.SetStateAction<number>>,
     selectedList: { name: string, type: boolean },
     setSelectedList: React.Dispatch<React.SetStateAction<{ name: string, type: boolean }>>,
-    selectedUrls: Record<string, Record<string, string>>,
-    setSelectedUrls: React.Dispatch<React.SetStateAction<Record<string, Record<string, string>>>>,
+    selectedUrls: urlObject,
+    setSelectedUrls: React.Dispatch<React.SetStateAction<urlObject>>,
     selectedType: boolean,
-    setSelectedType: React.Dispatch<React.SetStateAction<boolean>>
+    setSelectedType: React.Dispatch<React.SetStateAction<boolean>>,
+    isPopUpOpen: boolean,
+    setIsPopUpOpen: React.Dispatch<React.SetStateAction<boolean>>
 })
 
 interface selectedListObject{
@@ -19,12 +21,23 @@ interface selectedListObject{
     type:boolean
 }
 
+interface urlObject {
+    date: string,
+    description: string,
+    image: string,
+    tags: string[],
+    presets: string[],
+    title: string,
+    url: string
+}
+
 const SelectedDataProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [selectedList, setSelectedList] = useState<selectedListObject>({name:'',type:false})                               //選択されたリスト
-    const [selectedUrls, setSelectedUrls] = useState<Record<string, Record<string, any>>>({})   //選択されたURLのオブジェクト
+    const [selectedUrls, setSelectedUrls] = useState<urlObject>({date:'',description:'',image:'',tags:[],presets:[],title:'',url:''})   //選択されたURLのオブジェクト
     const [selectedType, setSelectedType] = useState<boolean>(true)                             //選択されたのがタグかプリセットか
     const [page, setPage] = useState<number>(1)                                                 //ページ番号
+    const [isPopUpOpen, setIsPopUpOpen] = useState<boolean>(false)                              //ポップアップの表示切り替え
 
     /*
     page:1 => HOME
@@ -34,7 +47,7 @@ const SelectedDataProvider = ({ children }: { children: React.ReactNode }) => {
     */
 
     return (
-        <SelectedData.Provider value={{page,setPage,selectedList,setSelectedList,selectedUrls,setSelectedUrls,selectedType,setSelectedType }}>
+        <SelectedData.Provider value={{page,setPage,selectedList,setSelectedList,selectedUrls,setSelectedUrls,selectedType,setSelectedType ,isPopUpOpen,setIsPopUpOpen}}>
             {children}
         </SelectedData.Provider>
     )

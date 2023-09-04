@@ -3,6 +3,7 @@ import { debounce } from 'lodash'
 import { useState, useEffect, useRef ,useContext} from "react";
 import { Link as MuiLink } from "@mui/material";
 import { UserData } from "@/consts/provider/UserDataProvider";
+import { SelectedData } from "@/consts/provider/SelectedData";
 
 import extractDomain from "@/features/extractDomain";
 
@@ -11,6 +12,8 @@ const UrlCard = ( ) => {
 
     const parentRef = useRef(null);
     const { urls } = useContext(UserData);
+    const {setIsPopUpOpen,setSelectedUrls} = useContext(SelectedData)
+
 
     const [targetWidth, setTargetWidth] = useState<number>(0);
     const [cardAmount,setCardAmount] = useState<number>(3)
@@ -28,7 +31,9 @@ const UrlCard = ( ) => {
             count += 1
 
             const newCard = (
-                <MuiLink key={item} target='_blank' href={url} style={{ width: `${cardWidth}px` }} className={`rounded-[10px] flex bg-[#202020] items-center flex-col rounded hover:bg-[#242424] no-underline break-words overflow-hidden`}>
+                <MuiLink key={item} target='_blank' href={url} style={{ width: `${cardWidth}px` }} className={`rounded-[10px] flex bg-[#202020] items-center flex-col rounded hover:bg-[#242424] no-underline break-words overflow-hidden`}
+                    onContextMenu={(e) => { e.preventDefault(); setIsPopUpOpen(true), setSelectedUrls(urls[item])}}
+                >
                     <img src={image} className="object-cover m-[10%] rounded-[10px]" style={{ width: `${cardWidth * 0.8}px`, height: `${cardWidth * 0.8}px`}}/> 
                     <div className="text-white py-[10%] w-[80%] text-left font-[1rem]">
                         {title !== undefined ? title.slice(0, 30) : <div className=" bg-[#454545] h-[1rem] w-full rounded-[20px] "/>}

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React,{useEffect} from 'react'
 import ForDesktop from './components/desktop/DesktopBase'
 import ForMobile from './components/mobile/MobileBase'
 import ThemeProvider from '@/consts/provider/ThemeProvider'

@@ -25,7 +25,7 @@ interface ListProps {
 
 const Library = () => {
 
-    const {selectedType,setSelectedType,setPage,setSelectedList} = useContext(SelectedData)
+    const {selectedType,setSelectedType,setPage,setSelectedList,setIsPopUpOpen} = useContext(SelectedData)
     const {tags,presets,} = useContext(UserData)                                   //タグとプリセットのオブジェクト
     const [listCard,setListCard] = React.useState<JSX.Element[]>([])               //タグとプリセットのカード
     const [lists, setLists] = React.useState<Record<string, ListProps>>({})        //タグとプリセットのオブジェクト
@@ -35,7 +35,13 @@ const Library = () => {
         setListCard([])
             Object.keys(lists).map((list) => {
                 setListCard(prev => [...prev, (
-                    <ListButtonV3 key={'LibraryTagCard' + list} id="rotateIcon" label={list} label2='Tag' color='white' onClick={()=>{setSelectedList({name:list,type:selectedType?true:false}),setPage(4)}} >
+                    <ListButtonV3 
+                        key={'LibraryTagCard' + list} 
+                        id="rotateIcon" label={list} label2='Tag' 
+                        color='white' 
+                        onClick={()=>{setSelectedList({name:list,type:selectedType?true:false}),setPage(4)}} 
+                        onContextMenu={(e) => {e.preventDefault(),setSelectedList({ name: list, type: selectedType ? true : false }),setIsPopUpOpen(true)}}
+                    >
                         <img src={lists[list].image} width='45px' height='45px' style={{ maxWidth: "45px", maxHeight: "45px", minWidth: "45px", minHeight: "45px", objectFit: 'cover', borderRadius: '10px' }} />
                         <IconButton disableRipple>
                             <RemoveIcon sx={{ color: 'gray' }} fontSize="medium" />

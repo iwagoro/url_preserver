@@ -60,6 +60,11 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
                         return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,urlObject>
                     })
                 }
+                else if(doc.type === "modified"){
+                    setUrls( prev => {
+                        return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,urlObject>
+                    })
+                }
             })
         )
     },[])
@@ -99,10 +104,22 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
                         } )
                     }
                 }
+                else if(doc.type === 'modified'){
+                    if(doc.doc.data().type === 'tag'){
+                        setTags( prev => {
+                            return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,tagObject>
+                        })
+                    }
+                    else if(doc.doc.data().type === 'preset'){
+                        setPresets( prev => {
+                            return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,presetObject>
+                        })
+                    }
+                }
             })
         })
     }, [])
-
+    
 
     return (
         <UserData.Provider value={{userName,setUserName,userIcon,setUserIcon,tags,setTags,presets,setPresets,urls,setUrls}}>

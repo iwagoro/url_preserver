@@ -6,7 +6,7 @@ const ListCard = ({type}:{type:string}) => {
 
     const [card, setCard] = useState<JSX.Element[]>([])
     const {tags,presets} = useContext(UserData)
-    const {selectedList,setSelectedList,setPage} = useContext(SelectedData)
+    const {selectedList,setSelectedList,setPage,setIsPopUpOpen} = useContext(SelectedData)
 
     useEffect(()=>{
         setCard([])
@@ -28,6 +28,7 @@ const ListCard = ({type}:{type:string}) => {
                         setSelectedList({name:list,type:type==='tag'?true:false})
                         setPage(4)
                     }}
+                    onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name: list, type: type === 'tag' ? true : false }), setIsPopUpOpen(true) }}
                 >
                     <img src={lists[list].image} width="50px" height="50px" style={{ margin: '10px', maxWidth: "50px", maxHeight: "50px", minWidth: "50px", minHeight: "50px", objectFit: 'cover', borderRadius: '10px' }} />
                     <div className="flex flex-col justify-between flex-grow my-[15px] mr-[15px]">
