@@ -10,7 +10,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 const Search = () => {  
 
     const {urls,tags,presets} = useContext(UserData)
-    const {selectedList,setSelectedList,setPage} = useContext(SelectedData)
+    const {selectedList,setSelectedList,setPage,setIsPopUpOpen,setSelectedUrls} = useContext(SelectedData)
     const [UrlCard,setUrlCard] = useState<JSX.Element[]>([])
     const [TagCard,setTagCard] = useState<JSX.Element[]>([])
     const [PresetCard,setPresetCard] = useState<JSX.Element[]>([])
@@ -24,6 +24,7 @@ const Search = () => {
                     key={'SearchURLCard' + url} 
                     target='_blank' 
                     href={urls[url].url} 
+                    onContextMenu={(e) => { e.preventDefault(); setIsPopUpOpen(true), setSelectedUrls(urls[url]) }}
                     sx={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${urls[url].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
                 >
@@ -45,6 +46,7 @@ const Search = () => {
                         setSelectedList({ name: tag, type:  true  })
                         setPage(4)
                     }}
+                    onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name: tag, type: true  }), setIsPopUpOpen(true) }}
                 >
                     <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{tags[tag].name}</p>
@@ -65,6 +67,7 @@ const Search = () => {
                         setSelectedList({ name: preset, type:false })
                         setPage(4)
                     }}
+                    onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name:preset, type: false }), setIsPopUpOpen(true) }}
                 >
                     <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{presets[preset].name}</p>
@@ -84,6 +87,7 @@ const Search = () => {
                     key={'SearchURLCard' + url} 
                     target='_blank' 
                     href={urls[url].url} 
+                    onContextMenu={(e) => { e.preventDefault(); setIsPopUpOpen(true), setSelectedUrls(urls[url]) }}
                     sx={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${urls[url].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
                 >
@@ -105,6 +109,7 @@ const Search = () => {
                         setSelectedList({ name: tag, type: true })
                         setPage(4)
                     }}
+                    onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name: tag, type: true }), setIsPopUpOpen(true) }}
                 >
                     <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(60%) blur(2px)', overflow: 'hidden' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{tags[tag].name}</p>
@@ -126,6 +131,7 @@ const Search = () => {
                         setSelectedList({ name: preset, type: false })
                         setPage(4)
                     }}
+                    onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name: preset, type: false }), setIsPopUpOpen(true) }}
                 >
                     <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(60%) blur(2px)', overflow: 'hidden' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{presets[preset].name}</p>
