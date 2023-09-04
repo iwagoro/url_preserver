@@ -87,7 +87,7 @@ const AddUrl = () => {
                 </IconButton>
             </div>
             <div className="w-[90%] flex items-center ">
-                <div id="rotateIcon" className="w-[30%] flex flex-row items-center">
+                <div id="rotateIcon" className="w-[30%] flex flex-row items-center my-[5%]">
                         <IconButton disableRipple className=" h-[30px] rounded-[15px]" onClick={() => setToggle(prev => prev = !prev)}>
                             <AutorenewIcon className='rotateIcon mr-[10px]' fontSize="medium" sx={{ color: "white" }} />
                             <p>{toggle ? ' Tag ' : ' Preset '}</p>
