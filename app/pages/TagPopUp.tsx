@@ -2,14 +2,16 @@ import React,{useEffect,useState,useContext} from "react";
 import { Dialog,DialogTitle,DialogContent,DialogActions } from "@mui/material";
 import { SelectedData } from "@/consts/provider/SelectedData";
 import { UserData } from "@/consts/provider/UserDataProvider";
-import { TextField } from "@mui/material";
+import { TextField ,IconButton} from "@mui/material";
 import { useForm } from "react-hook-form";
-import {updateTag,updatePreset} from '@/features/DataBaseCRUD'
+import {updateTag,updatePreset,deleteList} from '@/features/DataBaseCRUD'
+
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const TagPopUp = ({ isOpen,onClose }: {isOpen: boolean,onClose:() => void}) =>{
 
     const {selectedList,selectedType,setSelectedList} = useContext(SelectedData)
-    const {tags,presets} = useContext(UserData)
+    const {tags,presets,urls} = useContext(UserData)
     const [list,setList] = useState<{name:string,image:string,type:string}>({name:'',image:'',type:''})
     const { register, setValue, getValues } = useForm();
 
@@ -51,7 +53,12 @@ const TagPopUp = ({ isOpen,onClose }: {isOpen: boolean,onClose:() => void}) =>{
                 },
             }}
         >
-                <div id="content" className=" flex  items-center m-[5%] ">
+            <div id="content" className=" flex  items-center mx-[5%] mt-[5%]">
+                <IconButton disableRipple className="text-[1rem] text-white brightness-[60%] hover:brightness-[100%]" onClick={()=>{deleteList(list?.name || '',urls,selectedList.type),onClose()}}>
+                    <DeleteIcon sx={{ color: 'white' }} fontSize="medium" />Delete
+                </IconButton>
+            </div>
+                <div id="content" className=" flex  items-center mx-[5%] ">
                 <img
                     id="Banner"
                     src={list?.image || ''}

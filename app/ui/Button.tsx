@@ -2,7 +2,6 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { ListItem, List, IconButton } from '@mui/material'
-import { deleteTag } from "@/features/DataBaseCRUD";
 import { UserData } from '@/consts/provider/UserDataProvider';
 import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
 import RemoveIcon from '@mui/icons-material/Remove';

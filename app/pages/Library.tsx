@@ -7,6 +7,7 @@ import { filterLists ,sortLists} from "@/features/ListUtil";
 import ModalMenu from "@/ui/ModalMenu";
 import {ListButton,ListButtonV2,ListButtonV3} from "@/ui/Button";
 import {List,ListItem,IconButton,Grid,Select,FormControl,InputLabel,TextField,Chip, Modal,} from "@mui/material";
+import { deleteList } from "@/features/DataBaseCRUD";
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
@@ -26,7 +27,7 @@ interface ListProps {
 const Library = () => {
 
     const {selectedType,setSelectedType,setPage,setSelectedList,setIsPopUpOpen} = useContext(SelectedData)
-    const {tags,presets,} = useContext(UserData)                                   //タグとプリセットのオブジェクト
+    const {tags,presets,urls} = useContext(UserData)                                   //タグとプリセットのオブジェクト
     const [listCard,setListCard] = React.useState<JSX.Element[]>([])               //タグとプリセットのカード
     const [lists, setLists] = React.useState<Record<string, ListProps>>({})        //タグとプリセットのオブジェクト
     const [toggle,setToggle] = React.useState<boolean>(false);                     //検索バーの表示切り替え
@@ -43,7 +44,7 @@ const Library = () => {
                         onContextMenu={(e) => {e.preventDefault(),setSelectedList({ name: list, type: selectedType ? true : false }),setIsPopUpOpen(true)}}
                     >
                         <img src={lists[list].image} width='45px' height='45px' style={{ maxWidth: "45px", maxHeight: "45px", minWidth: "45px", minHeight: "45px", objectFit: 'cover', borderRadius: '10px' }} />
-                        <IconButton disableRipple>
+                        <IconButton disableRipple onClick={() => { deleteList(list, urls, selectedType)}}>
                             <RemoveIcon sx={{ color: 'gray' }} fontSize="medium" />
                         </IconButton>
                     </ListButtonV3>

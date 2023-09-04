@@ -65,6 +65,13 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
                         return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,urlObject>
                     })
                 }
+                else if(doc.type === "removed"){
+                    setUrls( prev => {
+                        const newUrls = {...prev}
+                        delete newUrls[doc.doc.id]
+                        return newUrls
+                    })
+                }
             })
         )
     },[])

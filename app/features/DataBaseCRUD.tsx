@@ -74,17 +74,30 @@ const updateUrl= async (title:string,image:string,description:string,tags:Array<
         presets:presets,
     })
 }
-const deleteTag = async (tag: string, urls: Record<string, Record<string, any>>) => {
+const deleteList = async (tag: string, urls: Record<string, Record<string, any>>,type:boolean) => {
     
-    Object.keys(urls).filter( url => urls[url].tags.includes(tag)).map( async url => {
+    type ? Object.keys(urls).filter(url => urls[url].tags.includes(tag)).map(async url => {
 
-        const ref = doc(db, "User", 'test@gmail.com','Urls',url)
-        await updateDoc(ref,{
+        const ref = doc(db, "User", 'test@gmail.com', 'Urls', url)
+        await updateDoc(ref, {
             tags: urls[url].tags.filter((item: string) => item !== tag)
+        })
+    }) : Object.keys(urls).filter(url => urls[url].presets.includes(tag)).map(async url => {
+
+        const ref = doc(db, "User", 'test@gmail.com', 'Urls', url)
+        await updateDoc(ref, {
+            presets: urls[url].presets.filter((item: string) => item !== tag)
         })
     })
 
     const ref = doc(db, "User", 'test@gmail.com', 'Tags', tag)
     await deleteDoc(ref)
 }
-export {addUrltoDB,AddTagtoDB,AddPresettoDB,deleteTag,updateTag,updatePreset,updateUrl}
+
+const deleteUrl = async (url:string) => {
+
+    const ref = doc(db,"User",'test@gmail.com','Urls',extractDomain(url))
+    await deleteDoc(ref)
+}
+
+export {addUrltoDB,AddTagtoDB,AddPresettoDB,deleteList,updateTag,updatePreset,updateUrl,deleteUrl}

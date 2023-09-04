@@ -4,9 +4,11 @@ import { SelectedData } from "@/consts/provider/SelectedData";
 import { UserData } from "@/consts/provider/UserDataProvider";
 import { TextField,Chip ,IconButton} from "@mui/material";
 import { useForm } from "react-hook-form";
-import { updateUrl} from '@/features/DataBaseCRUD'
+import { updateUrl,deleteUrl} from '@/features/DataBaseCRUD'
+import { ListButton } from "@/ui/Button";
 
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const UrlPopUp = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
 
@@ -87,7 +89,12 @@ const UrlPopUp = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void })
                 },
             }}
         >
-            <div id="content" className=" flex  items-center mx-[5%] mt-[5%] ">
+            <div id="content" className=" flex  items-center mx-[5%] mt-[5%]">
+                <IconButton disableRipple className="text-[1rem] text-white brightness-[60%] hover:brightness-[100%]" onClick={() => { deleteUrl(selectedUrls?.url || ''),onClose()}}>
+                    <DeleteIcon sx={{ color: 'white' }} fontSize="medium" />Delete
+                </IconButton>
+            </div>
+            <div id="content" className=" flex  items-center mx-[5%]  ">
                 <img
                     id="Banner"
                     src={selectedUrls?.image || ''}
