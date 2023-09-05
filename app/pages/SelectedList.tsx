@@ -1,12 +1,6 @@
 "use client"
 import React,{useEffect,useState} from "react";
-import { List,Table,TableCell,TableBody,TableRow,TableHead,TableContainer } from "@mui/material";
-
-import { Timestamp } from "firebase/firestore";
-import Greet from '@/features/Greet'
-import UrlCard from "@/ui/UrlCard";
-import ListCard from "@/ui/ListCard";
-import { Link as MuiLink } from "@mui/material";
+import { Table,TableCell,TableBody,TableRow,TableHead,TableContainer } from "@mui/material";
 
 import { SelectedData } from "@/consts/provider/SelectedData";
 import { UserData } from "@/consts/provider/UserDataProvider";

@@ -1,38 +1,30 @@
 "use client"
-import React,{useEffect} from 'react'
+import React,{useEffect,useContext} from 'react'
 import ForDesktop from './components/desktop/DesktopBase'
 import ForMobile from './components/mobile/MobileBase'
+
 import ThemeProvider from '@/consts/provider/ThemeProvider'
-import UserDataProvider from "@/consts/provider/UserDataProvider";
+import {UserDataProvider} from "@/consts/provider/UserDataProvider";
 import SelectedDataProvider from './consts/provider/SelectedData';
 import { useMediaQuery } from '@mui/material';
+import Base from '@/components/common/Base'
+import Login from '@/components/common/Login'
 import { Inter } from '@next/font/google'
 const InterNormal = Inter({
     subsets: ['latin-ext'],
 })
 
-const App = () => {
+import {getAuth,onAuthStateChanged} from 'firebase/auth'
 
-    const isDesktop = useMediaQuery('(min-width:600px)')
+
+const App = () => {
+    
 
     return (
         <UserDataProvider>
         <SelectedDataProvider>
         <ThemeProvider>
-        <div className={InterNormal.className}>
-            {isDesktop
-            ?           <div id="ForDeskTop" className="w-screen h-screen bg-black">
-                            <ForDesktop />
-                        </div>
-            :
-                        <div id="ForMobile" className="w-screen h-screen bg-black">
-                            <ForMobile/>
-                        </div>
-            }
-
-            
-
-        </div>
+                    <Base/>
         </ThemeProvider>
         </SelectedDataProvider>
         </UserDataProvider>
@@ -40,3 +32,9 @@ const App = () => {
 }
 
 export default App
+
+
+
+/*
+
+ */

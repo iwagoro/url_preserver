@@ -6,8 +6,9 @@ import { SelectedData } from "@/consts/provider/SelectedData";
 import { filterLists ,sortLists} from "@/features/ListUtil";
 import ModalMenu from "@/ui/ModalMenu";
 import {ListButton,ListButtonV2,ListButtonV3} from "@/ui/Button";
-import {List,ListItem,IconButton,Grid,Select,FormControl,InputLabel,TextField,Chip, Modal,} from "@mui/material";
+import {ListItem,IconButton,TextField} from "@mui/material";
 import { deleteList } from "@/features/DataBaseCRUD";
+import { listInterface } from "@/consts/Interface";
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
@@ -18,18 +19,13 @@ import RemoveIcon from '@mui/icons-material/Remove';
 
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 
-interface ListProps {
-    type: string;
-    name: string;
-    image: string;
-}
 
 const Library = () => {
 
     const {selectedType,setSelectedType,setPage,setSelectedList,setIsPopUpOpen} = useContext(SelectedData)
     const {tags,presets,urls} = useContext(UserData)                                   //タグとプリセットのオブジェクト
     const [listCard,setListCard] = React.useState<JSX.Element[]>([])               //タグとプリセットのカード
-    const [lists, setLists] = React.useState<Record<string, ListProps>>({})        //タグとプリセットのオブジェクト
+    const [lists, setLists] = React.useState<Record<string, listInterface>>({})        //タグとプリセットのオブジェクト
     const [toggle,setToggle] = React.useState<boolean>(false);                     //検索バーの表示切り替え
 
     useEffect(()=>{

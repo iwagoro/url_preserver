@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react'
 import { TextField, IconButton, Chip } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useForm } from "react-hook-form";
-import createThumbnail from '@/lib/LinkPreview'
 
 import {AddTagtoDB, AddPresettoDB} from "@/features/DataBaseCRUD"
 

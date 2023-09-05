@@ -1,6 +1,5 @@
 "use client"
-import React,{useEffect} from "react";
-import {List ,Avatar, IconButton } from "@mui/material";
+import React from "react";
 import Greet from '@/features/Greet'
 import UrlCard from "@/ui/UrlCard";
 import ListCard from "@/ui/ListCard";
@@ -8,13 +7,14 @@ import AddUrl from "@/ui/AddUrl";
 import AddList from "@/ui/AddList";
 
 
+
 const Home = () => {
 
 
     return (
-        <div id="Home" className="w-full h-full pb-[5%]">
+        <div id="Home" className="w-full h-full pb-[5%]" >
 
-            <h1 className="py-[5%]">Home</h1>
+            <h1 className="py-[5%]" >Home</h1>
 
                 <img
                     id="Banner"

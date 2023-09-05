@@ -6,7 +6,7 @@ const ListCard = ({type}:{type:string}) => {
 
     const [card, setCard] = useState<JSX.Element[]>([])
     const {tags,presets} = useContext(UserData)
-    const {selectedList,setSelectedList,setPage,setIsPopUpOpen} = useContext(SelectedData)
+    const {setSelectedList,setPage,setIsPopUpOpen} = useContext(SelectedData)
 
     useEffect(()=>{
         setCard([])

@@ -88,7 +88,7 @@ const UrlCard = ( ) => {
         return () => {
             parentElement && resizeObserver.unobserve(parentElement)
         }
-    })
+    },[])
 
     useEffect( () => {
         setCard([])

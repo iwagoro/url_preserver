@@ -8,17 +8,33 @@ import { SelectedData } from "@/consts/provider/SelectedData";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import LogoutIcon from '@mui/icons-material/Logout';
 import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
 import { IconButton, Avatar } from "@mui/material";
-
+import TwoOrderDialog from "@/ui/TwoOrderDialog";
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import SelectedList from "@/pages/SelectedList";
 import TagPopUp  from "@/pages/TagPopUp";
 import UrlPopUp from "@/pages/UrlPopUp";
+import { getUserIcon, getUserName } from "@/features/auth";
 
 const MobileBase= () => {
 
     const {page,setPage,setIsPopUpOpen,isPopUpOpen,selectedUrls,selectedList} = React.useContext(SelectedData)
+
+    const [userName, setUserName] = useState<string>('')
+    const [userImage, setUserImage] = useState<string>('')
+    const [isSignOut, setIsSignOut] = useState(false)
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const userName = await getUserName()
+            setUserName(userName)
+            const userIcon = await getUserIcon()
+            setUserImage(userIcon)
+        }
+        fetchUser()
+    }, [])
 
     return (
        <>
@@ -28,14 +44,14 @@ const MobileBase= () => {
                         <div className="w-[90%] h-full flex justify-between items-center ">
                             <div className="flex">
                                 <Avatar
-                                    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh6ErsCMbdaxWNDI5KnQe3hwVRLXrRWmqzmMtPQLTAVclBn5PCkCGuBXGmFNovC7I1pFCVYb6PhLs0LK85zUA0JeUJB_jad416aRl7E0snf9pACrT3GNVRwQrb0uDbWt9sCV_nsxIpl33eCi8dlSpgsIUJXgS_Ho7y3vgAam2apeqV1C0KV2F1XzdVv2v52/s400/kodai_sacabambaspis.png"
+                                    src={userImage}
                                     className="w-[40px] h-[40px] bg-white mr-[20px]"
                                 />
-                                <h3 className=""> - Account Name - </h3>
+                                <h3 className=""> - {userName} - </h3>
                             </div>
                             <div>
-                                <IconButton disableRipple>
-                                    <DragIndicatorIcon fontSize='large' sx={{ color: 'white' }} />
+                                <IconButton disableRipple onClick={() => setIsSignOut(true)}>
+                                    <LogoutIcon fontSize='medium' sx={{ color: 'white' }} />
                                 </IconButton>
                             </div>
                         </div>
@@ -79,6 +95,7 @@ const MobileBase= () => {
 
             <TagPopUp isOpen={isPopUpOpen && selectedList.name !== '' && selectedUrls.title === ''} onClose={() => { setIsPopUpOpen(false) }} />
             <UrlPopUp isOpen={isPopUpOpen && selectedList.name === '' && selectedUrls.title !== ''} onClose={() => { setIsPopUpOpen(false) }} />
+            <TwoOrderDialog isOpen={isSignOut} onClose={() => { setIsSignOut(false) }}></TwoOrderDialog>
 
        </>
     )

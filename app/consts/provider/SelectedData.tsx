@@ -1,15 +1,14 @@
 'use client'
 import React, { useState, useEffect, createContext } from 'react';
-import { db } from '@/lib/FireBase';
-import { collection, onSnapshot, doc, getDoc } from "@firebase/firestore";
+import { urlInterface } from '../Interface';
 
 export const SelectedData = createContext({} as {
     page: number,
     setPage: React.Dispatch<React.SetStateAction<number>>,
     selectedList: { name: string, type: boolean },
     setSelectedList: React.Dispatch<React.SetStateAction<{ name: string, type: boolean }>>,
-    selectedUrls: urlObject,
-    setSelectedUrls: React.Dispatch<React.SetStateAction<urlObject>>,
+    selectedUrls: urlInterface,
+    setSelectedUrls: React.Dispatch<React.SetStateAction<urlInterface>>,
     selectedType: boolean,
     setSelectedType: React.Dispatch<React.SetStateAction<boolean>>,
     isPopUpOpen: boolean,
@@ -21,20 +20,10 @@ interface selectedListObject{
     type:boolean
 }
 
-interface urlObject {
-    date: string,
-    description: string,
-    image: string,
-    tags: string[],
-    presets: string[],
-    title: string,
-    url: string
-}
-
 const SelectedDataProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [selectedList, setSelectedList] = useState<selectedListObject>({name:'',type:false})                               //選択されたリスト
-    const [selectedUrls, setSelectedUrls] = useState<urlObject>({date:'',description:'',image:'',tags:[],presets:[],title:'',url:''})   //選択されたURLのオブジェクト
+    const [selectedUrls, setSelectedUrls] = useState<urlInterface>({date:'',description:'',image:'',tags:[],presets:[],title:'',url:''})   //選択されたURLのオブジェクト
     const [selectedType, setSelectedType] = useState<boolean>(true)                             //選択されたのがタグかプリセットか
     const [page, setPage] = useState<number>(1)                                                 //ページ番号
     const [isPopUpOpen, setIsPopUpOpen] = useState<boolean>(false)                              //ポップアップの表示切り替え

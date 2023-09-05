@@ -1,138 +1,100 @@
 'use client'
-import React, { useState, useEffect,createContext } from 'react';
+import React, { useState, useEffect,createContext} from 'react';
 import { db } from '@/lib/FireBase';
 import { collection, onSnapshot, doc, getDoc } from "@firebase/firestore";
+import { getUserName } from '@/features/auth';
+import { urlInterface,listInterface } from '@/consts/Interface';
+
 
 export const UserData = createContext({} as {
-    userName:string,
-    setUserName:React.Dispatch<React.SetStateAction<string>>,
-    userIcon:string,
-    setUserIcon:React.Dispatch<React.SetStateAction<string>>,
-    tags:Record<string,tagObject>,
-    setTags:React.Dispatch<React.SetStateAction<Record<string,tagObject>>>,
-    presets:Record<string,presetObject>,
-    setPresets:React.Dispatch<React.SetStateAction<Record<string,presetObject>>>,
-    urls:Record<string,urlObject>
-    setUrls:React.Dispatch<React.SetStateAction<Record<string,urlObject>>>
+    isLogin:number,
+    setIsLogin:React.Dispatch<React.SetStateAction<number>>,
+    tags:Record<string,listInterface>,
+    setTags:React.Dispatch<React.SetStateAction<Record<string,listInterface>>>,
+    presets:Record<string,listInterface>,
+    setPresets:React.Dispatch<React.SetStateAction<Record<string,listInterface>>>,
+    urls:Record<string,urlInterface>
+    setUrls:React.Dispatch<React.SetStateAction<Record<string,urlInterface>>>
 })
 
 
-interface urlObject{
-    date:string,
-    description:string,
-    image:string,
-    tags:string[],
-    presets:string[],
-    title:string,
-    url:string
-}
-
-interface tagObject{
-    image:string,
-    name:string,
-    type:string
-}
-
-interface presetObject{
-    image:string,
-    name:string,
-    type:string
-}
 
 const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const userIconImage = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh6ErsCMbdaxWNDI5KnQe3hwVRLXrRWmqzmMtPQLTAVclBn5PCkCGuBXGmFNovC7I1pFCVYb6PhLs0LK85zUA0JeUJB_jad416aRl7E0snf9pACrT3GNVRwQrb0uDbWt9sCV_nsxIpl33eCi8dlSpgsIUJXgS_Ho7y3vgAam2apeqV1C0KV2F1XzdVv2v52/s400/kodai_sacabambaspis.png"
-
-    const [userName,setUserName] = useState<string>('test@gmail.com')               //ユーザー名
-    const [userIcon,setUserIcon] = useState<string>(userIconImage)                             //ユーザーアイコン
-    const [tags,setTags] = useState<Record<string,tagObject>>({})                      //タグオブジェクト（image,name,type）
-    const [presets,setPresets] = useState<Record<string,presetObject>>({})                //プリセットオブジェクト（image,name,type）
-    const [urls,setUrls] = useState<Record<string,urlObject>>({})                   //URLオブジェクト（date,description,image,tags,tittle,url）
+    const [tags,setTags] = useState<Record<string,listInterface>>({})                      //タグオブジェクト（image,name,type）
+    const [presets,setPresets] = useState<Record<string,listInterface>>({})                //プリセットオブジェクト（image,name,type）
+    const [urls,setUrls] = useState<Record<string,urlInterface>>({})                   //URLオブジェクト（date,description,image,tags,tittle,url）
+    const [isLogin, setIsLogin] = useState<number>(0)                                     //ログイン状態（0:未確認,1:未ログイン,2:ログイン済み）
 
 
     //URLオブジェクトの取得
     useEffect(() => {
-        const collectionRef = collection(db, 'User', userName, 'Urls')
-        const subscribe = onSnapshot(collectionRef, (snapshot) => 
-            snapshot.docChanges().forEach(doc => {
-                if(doc.type === "added"){
-                    setUrls( prev => {
-                        return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,urlObject>
-                    })
-                }
-                else if(doc.type === "modified"){
-                    setUrls( prev => {
-                        return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,urlObject>
-                    })
-                }
-                else if(doc.type === "removed"){
-                    setUrls( prev => {
-                        const newUrls = {...prev}
-                        delete newUrls[doc.doc.id]
-                        return newUrls
-                    })
-                }
-            })
-        )
-    },[])
+        const fetchData = async ()=> {
+            const userName = await getUserName()
+            if (userName === '') return
+            const collectionRef = collection(db, 'User', userName, 'Urls')
+            const subscribe = onSnapshot(collectionRef, (snapshot) =>
+                snapshot.docChanges().forEach(doc => {
+                    if (doc.type === "added" || doc.type === "modified") {
+                        setUrls(prev => { return { ...prev, [doc.doc.id]: doc.doc.data() } as Record<string, urlInterface>})
+                    }else if (doc.type === "removed") {
+                        setUrls(prev => {
+                            const newUrls = { ...prev }
+                            delete newUrls[doc.doc.id]
+                            return newUrls
+                        })
+                    }
+                })
+            )
+        }
+        fetchData()
+    },[isLogin])
 
 
     //タグ&プリセットオブジェクトの取得
     useEffect(() => {
-        const collectionRef = collection(db, 'User', userName, 'Tags')
-        const subscribe = onSnapshot(collectionRef, (snapshot) => {
-            snapshot.docChanges().forEach(doc => {
-                if(doc.type === 'added'){
-                    if(doc.doc.data().type === 'tag'){
-                        setTags( prev => {
-                            return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,tagObject>
-                        })
-                    }
-                    else if(doc.doc.data().type === 'preset'){
-                        setPresets( prev => {
-                            return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,presetObject>
-                        })
-                    }
+        const fetchData = async ()=> {
+            const userName = await getUserName()
+            if (userName === '') return
+            const collectionRef = collection(db, 'User', userName, 'Tags')
+            const subscribe = onSnapshot(collectionRef, (snapshot) => {
+                snapshot.docChanges().forEach(doc => {
+                if(doc.type === 'added' || doc.type === 'modified'){
+                    if(doc.doc.data().type === 'tag')
+                        setTags( prev => { return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,listInterface> })
+                    
+                    else if(doc.doc.data().type === 'preset')
+                        setPresets( prev => { return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,listInterface> })   
                 }
                 else if(doc.type === 'removed'){
                     const removedTag = doc.doc.id
-                    if(doc.doc.data().type === 'tag'){
+                    if(doc.doc.data().type === 'tag')
                         setTags( prev => {
                             const newTags = {...prev}
                             delete newTags[removedTag]
                             return newTags
                         } )
-                    }
-                    else if(doc.doc.data().type === 'preset'){
+                    
+                    else if(doc.doc.data().type === 'preset')
                         setPresets( prev => {
                             const newPresets = {...prev}
                             delete newPresets[removedTag]
                             return newPresets
                         } )
-                    }
-                }
-                else if(doc.type === 'modified'){
-                    if(doc.doc.data().type === 'tag'){
-                        setTags( prev => {
-                            return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,tagObject>
-                        })
-                    }
-                    else if(doc.doc.data().type === 'preset'){
-                        setPresets( prev => {
-                            return {...prev,[doc.doc.id]:doc.doc.data()} as Record<string,presetObject>
-                        })
-                    }
+                    
                 }
             })
-        })
-    }, [])
+            })
+        }
+        fetchData()
+    }, [isLogin])
     
 
     return (
-        <UserData.Provider value={{userName,setUserName,userIcon,setUserIcon,tags,setTags,presets,setPresets,urls,setUrls}}>
+        <UserData.Provider value={{isLogin,setIsLogin,tags,setTags,presets,setPresets,urls,setUrls}}>
             {children}
         </UserData.Provider>
     )
 }
 
-export default UserDataProvider
+export { UserDataProvider}

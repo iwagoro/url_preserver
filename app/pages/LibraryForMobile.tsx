@@ -6,7 +6,7 @@ import { SelectedData } from "@/consts/provider/SelectedData";
 import { filterLists, sortLists } from "@/features/ListUtil";
 import ModalMenu from "@/ui/ModalMenu";
 import { ListButtonV2,ListButtonV3 } from "@/ui/Button";
-import { List, ListItem, IconButton, Grid, Select, FormControl, InputLabel, TextField, Chip, Modal, } from "@mui/material";
+import {ListItem, IconButton,TextField } from "@mui/material";
 import RemoveIcon from '@mui/icons-material/Remove';
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FilterNoneOutlinedIcon from "@mui/icons-material/FilterNoneOutlined";
@@ -14,19 +14,15 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
 
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import { listInterface } from "@/consts/Interface";
 
-interface ListProps {
-    type: string;
-    name: string;
-    image: string;
-}
 
 const LibraryForMobile = () => {
 
     const { selectedType, setSelectedType, setPage, setSelectedList,setIsPopUpOpen } = useContext(SelectedData)
     const { tags, presets, } = useContext(UserData)                                   //タグとプリセットのオブジェクト
     const [listCard, setListCard] = React.useState<JSX.Element[]>([])               //タグとプリセットのカード
-    const [lists, setLists] = React.useState<Record<string, ListProps>>({})        //タグとプリセットのオブジェクト
+    const [lists, setLists] = React.useState<Record<string, listInterface>>({})        //タグとプリセットのオブジェクト
     const [toggle, setToggle] = React.useState<boolean>(false);                     //検索バーの表示切り替え
 
 
