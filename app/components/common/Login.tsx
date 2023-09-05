@@ -23,7 +23,7 @@ const Login = () => {
                     <div id='Main'>
                         <div id="buttons" className="flex flex-col  my-[5%] justify-between items-center">
                             <button className="w-[60%] h-[5vh] rounded-[40px] border border-white font-extrabold text-white text-[0.8rem] hover:bg-[#202020]"
-                                onClick={googleLogin}
+                                onClick={()=>googleLogin()}
                             >
                                 <GoogleIcon fontSize="small" className="mr-[1rem]" />Googleで登録/ログイン
                             </button>
