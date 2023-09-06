@@ -5,10 +5,12 @@ import ForMobile from '@/components/mobile/MobileBase'
 
 import ThemeProvider from '@/consts/provider/ThemeProvider'
 import { UserData } from '@/consts/provider/UserDataProvider'
+import { SelectedData } from '@/consts/provider/SelectedData';
 import SelectedDataProvider from '@/consts/provider/SelectedData';
 import { useMediaQuery } from '@mui/material';
 import Login from '@/components/common/Login'
 import { Inter } from '@next/font/google'
+import { useRef } from 'react';
 const InterNormal = Inter({
     subsets: ['latin-ext'],
 })
@@ -20,7 +22,10 @@ const Base = () => {
 
 
     const { isLogin, setIsLogin } = useContext(UserData)
+    const {isPopUpOpen,setIsPopUpOpen,setPage} = useContext(SelectedData)
     const isDesktop = useMediaQuery('(min-width:600px)')
+
+    const container = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const auth = getAuth()
@@ -33,10 +38,30 @@ const Base = () => {
         })
     }, [isLogin])
 
+    const touchStartEvent = (e:any) => {
+        if (e.touches[0].pageX > 16 && e.touches[0].pageX < window.innerWidth - 16) return;
+        e.preventDefault();
+        setIsPopUpOpen(false)
+        setPage(1)
+        
+    }
+
+    useEffect(() => {
+        if (container.current) {
+            container.current.addEventListener('touchstart', (e) => touchStartEvent(e));
+        }
+
+        return () => {
+            if (container.current) {
+                container.current.removeEventListener('touchstart', touchStartEvent);
+            }
+        }
+    }, [container.current]);
+
 
 
     return (
-        <>
+        <div ref={container}>
             {
                 isLogin === 0 && <div />
             }
@@ -56,7 +81,7 @@ const Base = () => {
                     }
                 </div>
             }
-        </>
+        </div>
     )
 }
 
