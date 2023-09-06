@@ -43,7 +43,7 @@ const Base = () => {
 
 
     return (
-        <div ref={container}>
+        <div >
             {
                 isLogin === 0 && <div />
             }
