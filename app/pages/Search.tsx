@@ -28,7 +28,7 @@ const Search = () => {
                     sx={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${urls[url].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
                 >
-                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(50%) ' ,overflow:'hidden',borderRadius:'10px'}}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{urls[url].title}</p>
                     </div>
                 </MuiLink>
@@ -49,7 +49,7 @@ const Search = () => {
                     }}
                     onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name: tag, type: true  }), setIsPopUpOpen(true) }}
                 >
-                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(50%) ', overflow: 'hidden', borderRadius: '10px' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{tags[tag].name}</p>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ const Search = () => {
                     }}
                     onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name:preset, type: false }), setIsPopUpOpen(true) }}
                 >
-                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(50%) ', overflow: 'hidden', borderRadius: '10px' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{presets[preset].name}</p>
                     </div>
                 </div>
@@ -94,7 +94,7 @@ const Search = () => {
                     sx={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${urls[url].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
                 >
-                    <div style={{width:'100%',height:'100%',backdropFilter:'brightness(60%) blur(2px)' ,overflow:'hidden'}}>
+                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(50%) ', overflow: 'hidden', borderRadius: '10px' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{urls[url].title}</p>
                     </div>
                 </MuiLink>
@@ -115,7 +115,7 @@ const Search = () => {
                     }}
                     onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name: tag, type: true }), setIsPopUpOpen(true) }}
                 >
-                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(60%) blur(2px)', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(50%) ', overflow: 'hidden', borderRadius: '10px' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{tags[tag].name}</p>
                     </div>
                 </div>
@@ -138,7 +138,7 @@ const Search = () => {
                     }}
                     onContextMenu={(e) => { e.preventDefault(), setSelectedList({ name: preset, type: false }), setIsPopUpOpen(true) }}
                 >
-                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(60%) blur(2px)', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '100%', backdropFilter: 'brightness(50%) ', overflow: 'hidden', borderRadius: '10px' }}>
                         <p className=" whitespace-normal brightness-[100%] p-[5%] w-full text-[1.5rem] font-semibold">{presets[preset].name}</p>
                     </div>
                 </div>
