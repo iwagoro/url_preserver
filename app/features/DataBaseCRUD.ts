@@ -109,7 +109,7 @@ const deleteList = async (tag: string, urls: Record<string, Record<string, any>>
     type ? 
         Object.keys(urls).filter(url => urls[url].tags.includes(tag)).map(async url => {
 
-            const ref = doc(db, "User", 'test@gmail.com', 'Urls', url)
+            const ref = doc(db, "User", email, 'Urls', url)
             await updateDoc(ref, {
                 tags: urls[url].tags.filter((item: string) => item !== tag)
             })
@@ -117,19 +117,22 @@ const deleteList = async (tag: string, urls: Record<string, Record<string, any>>
     : 
         Object.keys(urls).filter(url => urls[url].presets.includes(tag)).map(async url => {
 
-            const ref = doc(db, "User", 'test@gmail.com', 'Urls', url)
+            const ref = doc(db, "User", email, 'Urls', url)
             await updateDoc(ref, {
                 presets: urls[url].presets.filter((item: string) => item !== tag)
             })
         })
 
-    const ref = doc(db, "User", 'test@gmail.com', 'Tags', tag)
+    const ref = doc(db, "User", email, 'Tags', tag)
     await deleteDoc(ref)
 }
 
 const deleteUrl = async (url:string) => {
 
-    const ref = doc(db,"User",'test@gmail.com','Urls',extractDomain(url))
+    const email = await getUserName()
+    if (email === '') return
+
+    const ref = doc(db,"User",email,'Urls',extractDomain(url))
     await deleteDoc(ref)
 }
 
