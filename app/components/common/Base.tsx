@@ -38,25 +38,25 @@ const Base = () => {
         })
     }, [isLogin])
 
-    const touchStartEvent = (e:any) => {
-        if (e.touches[0].pageX > 16 && e.touches[0].pageX < window.innerWidth - 16) return;
-        e.preventDefault();
-        setIsPopUpOpen(false)
-        setPage(1)
-        
-    }
-
     useEffect(() => {
+
+        const preventSwipe = (event: any) => {
+            event.preventDefault();
+        };
+
         if (container.current) {
-            container.current.addEventListener('touchstart', (e) => touchStartEvent(e));
+            container.current.addEventListener('touchmove', preventSwipe, { passive: false });
         }
+
 
         return () => {
             if (container.current) {
-                container.current.removeEventListener('touchstart', touchStartEvent);
+                container.current.removeEventListener('touchmove', preventSwipe);
             }
-        }
-    }, [container.current]);
+        };
+
+    },[container.current])
+
 
 
 
