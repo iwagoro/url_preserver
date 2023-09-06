@@ -41,8 +41,13 @@ html{
         align-items: center;
         white-space: pre-wrap;
     }
+
+    .searchCard{
+        will-change: filter;
+    }
     
     .flowText:hover p{
+        will-change: transform;
         animation-name: flowText;
         animation-duration: 5s;
         animation-iteration-count: infinite;
@@ -62,6 +67,7 @@ html{
     }
 
     #rotateIcon:hover .rotateIcon{
+        will-change: transform;
         animation-name: rotateIcon;
         animation-duration: 4s;
         animation-iteration-count: infinite;

@@ -22,6 +22,7 @@ const Search = () => {
                 <MuiLink 
                     key={'SearchURLCard' + url} 
                     target='_blank' 
+                    className="searchCard"
                     href={urls[url].url} 
                     onContextMenu={(e) => { e.preventDefault(); setIsPopUpOpen(true), setSelectedUrls(urls[url]) }}
                     sx={{
@@ -40,6 +41,7 @@ const Search = () => {
             const newCard = (
                 <div 
                     key={'SearchTagCard' + tag} 
+                    className="searchCard"
                     style={{width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${tags[tag].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
                     onClick={() => {
                         setSelectedList({ name: tag, type:  true  })
@@ -60,6 +62,7 @@ const Search = () => {
             const newCard = (
                 <div 
                     key={'SearchPresetCard' + preset} 
+                    className="searchCard"
                     style={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${presets[preset].image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}
                     onClick={() => {
@@ -84,6 +87,7 @@ const Search = () => {
             const newCard = (
                 <MuiLink 
                     key={'SearchURLCard' + url} 
+                    className="searchCard"
                     target='_blank' 
                     href={urls[url].url} 
                     onContextMenu={(e) => { e.preventDefault(); setIsPopUpOpen(true), setSelectedUrls(urls[url]) }}
@@ -103,6 +107,7 @@ const Search = () => {
             const newCard = (
                 <div
                     key={'SearchTagCard' + tag}
+                    className="searchCard"
                     style={{ width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${tags[tag].image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                     onClick={() => {
                         setSelectedList({ name: tag, type: true })
@@ -123,6 +128,7 @@ const Search = () => {
             const newCard = (
                 <div
                     key={'SearchPresetCard' + preset}
+                    className="searchCard"
                     style={{
                         width: '47%', height: '15vh', marginBottom: '5%', borderRadius: '10px', textDecoration: 'none', backgroundImage: `url(${presets[preset].image})`, backgroundSize: 'cover', backgroundPosition: 'center'
                     }}
@@ -143,7 +149,7 @@ const Search = () => {
     },[searchText])
 
     return (
-        <div className="w-full h-full pt-[5%]">
+        <div className="w-full h-full pt-[5%] ">
             
             <h1 className="pb-[5%]">
                 Search
@@ -188,7 +194,7 @@ const Search = () => {
             <div className='w-full font-semibold text-white text-[2rem] my-[5%] flex justify-left items-center'>
                 Preset
             </div>
-            <div id='preset' className="w-full  flex flex-row flex-wrap justify-between">
+            <div id='preset' className="w-full  flex flex-row flex-wrap justify-between ">
                 {PresetCard}
             </div>
 
