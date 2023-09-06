@@ -47,8 +47,9 @@ const createThumbnail = async (url: string) => {
     }
 
 
-
-    
+    if(result.title === undefined || result.title === null || result.title === ""){
+        result = { ...result, title: 'no title' }
+    }
 
     return result 
 }
