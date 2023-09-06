@@ -25,7 +25,6 @@ const Base = () => {
     const {isPopUpOpen,setIsPopUpOpen,setPage} = useContext(SelectedData)
     const isDesktop = useMediaQuery('(min-width:600px)')
 
-    const container = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const auth = getAuth()
@@ -38,24 +37,7 @@ const Base = () => {
         })
     }, [isLogin])
 
-    useEffect(() => {
-
-        const preventSwipe = (event: any) => {
-            event.preventDefault();
-        };
-
-        if (container.current) {
-            container.current.addEventListener('touchmove', preventSwipe, { passive: false });
-        }
-
-
-        return () => {
-            if (container.current) {
-                container.current.removeEventListener('touchmove', preventSwipe);
-            }
-        };
-
-    },[container.current])
+   
 
 
 
