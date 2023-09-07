@@ -7,7 +7,8 @@ import { UserData } from "@/consts/provider/UserDataProvider";
 
 const SelectedList = () => {
 
-    const {selectedList} = React.useContext(SelectedData)
+    const {selectedList,setSelectedList,setIsPopUpOpen,setSelectedUrls} = React.useContext(SelectedData)
+
     const {urls,tags,presets} = React.useContext(UserData)
     const [table,setTable] = useState<JSX.Element[]>([])
     const [urlAmount , setUrlAmount] = useState<number>(0)
@@ -21,7 +22,7 @@ const SelectedList = () => {
         if(selectedList.type){
             Object.keys(urls).filter(url => Array.isArray(urls[url].tags) && urls[url].tags.includes(selectedList.name) ).map( (url,index) => {
                 setTable(prev => [...prev, (
-                    <TableRow key={"Table" + url} className="cursor-pointer hover:bg-[#242424]" onClick={() => { ClicktoURL(urls[url].url) }}>
+                    <TableRow key={"Table" + url} className="cursor-pointer hover:bg-[#242424]" onClick={() => { ClicktoURL(urls[url].url) }} onContextMenu={(e) => { e.preventDefault(); setIsPopUpOpen(true), setSelectedUrls(urls[url]) }}>
                         <TableCell className="text-white"  >{index}</TableCell>
                         <TableCell className="text-white"  >
                             <img src={urls[url].image} width="40px" height="40px" style={{ maxWidth: "40px", maxHeight: "40px", minWidth: "40px", minHeight: "40px", objectFit: 'cover', borderRadius: '10px' }} />
@@ -35,7 +36,7 @@ const SelectedList = () => {
         }else{
             Object.keys(urls).filter(url => Array.isArray(urls[url].presets) && urls[url].presets.includes(selectedList.name)).map((url, index) => {
                 setTable(prev => [...prev, (
-                    <TableRow key={"Table" + url} className="cursor-pointer hover:bg-[#242424]" onClick={() => { ClicktoURL(urls[url].url) }}>
+                    <TableRow key={"Table" + url} className="cursor-pointer hover:bg-[#242424]" onClick={() => { ClicktoURL(urls[url].url) }} onContextMenu={(e) => { e.preventDefault(); setIsPopUpOpen(true), setSelectedUrls(urls[url]) }}>
                         <TableCell className="text-white"  >{index}</TableCell>
                         <TableCell className="text-white"  >
                             <img src={urls[url].image} width="40px" height="40px" style={{ maxWidth: "40px", maxHeight: "40px", minWidth: "40px", minHeight: "40px", objectFit: 'cover', borderRadius: '10px' }} />

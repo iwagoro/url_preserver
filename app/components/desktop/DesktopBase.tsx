@@ -22,6 +22,10 @@ const ForMobile = () => {
     const [isSignOut, setIsSignOut] = useState(false)
 
 
+    useEffect(()=>{
+        console.log(selectedList,selectedUrls,isPopUpOpen)
+    },[selectedList,isPopUpOpen,selectedUrls])
+
     return (
         <>
            
